@@ -115,7 +115,32 @@ public class Food {
 		return rs;
 	}
 
-	protected boolean updateFood(int foodID) {
+	protected boolean updateFood(int foodID, String foodName, String foodDescription, String picture) {
+		
+		byte[] image = imageToByte(picture);
+
+		try {
+			cstmt = conn.prepareCall("call updateFood (?, ?, ?, ?, ?, ?);");
+			cstmt.setInt(1, foodID);
+			cstmt.setString(2, this.userAccount);
+			cstmt.setString(3, foodName);
+			cstmt.setString(4, foodDescription);
+			cstmt.setBytes(5, image);
+			cstmt.registerOutParameter(6, Types.VARCHAR);
+			
+			int test = cstmt.executeUpdate();
+			
+			System.out.println(test);
+			
+			String status = cstmt.getString(6);
+			
+			if (status.equals("Success")) {
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Error: updateFood " + e.getMessage());
+		}
 		return false;
 	}
 
