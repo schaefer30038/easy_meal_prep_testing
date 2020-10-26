@@ -167,4 +167,19 @@ public class Food {
 		}
 		return rs;
 	}
+
+	protected int getFoodID(String foodName) {
+		String sql = "select foodID from Food where foodName = \"" + foodName + "\" and userAccount = \"" + this.userAccount
+				+ "\";";
+		int id = -1;
+		try {
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				id = rs.getInt("foodID");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error: getFoodID " + e.getMessage());
+		}
+		return id;
+	}
 }
