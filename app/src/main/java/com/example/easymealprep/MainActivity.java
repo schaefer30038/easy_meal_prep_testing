@@ -22,6 +22,7 @@ package com.example.easymealprep;
         import android.widget.EditText;
         import android.widget.ImageView;
         import android.widget.ProgressBar;
+        import android.widget.TextView;
         import android.widget.Toast;
 
         import com.example.easymealprep.R;
@@ -33,15 +34,18 @@ package com.example.easymealprep;
         import java.io.OutputStream;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    Button Login_Button, CreateNewAccount_Button;
-    EditText LogicUsername_PlainText,LoginPassword_PlainText;
+    TextView title, loginScreenLabel, login;
+    EditText username, password;
+    Button newAccount;
+
+
     //ImageView uploadPicture_ImageView;
     private ProgressBar prog;
     // TODO: this string will be "Username" if account doesn't exist
     // it will be "Password" if the password is wrong and    if username and password is a match it will return "Match"
-    static String login;
+    //static String login;
     // Stores the current username
-    static String currUser;
+    //static String currUser;
 
     //static boolean done = false;
     //public static final int GET_FROM_GALLERY = 3;
@@ -51,6 +55,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        title = (TextView) findViewById(R.id.title_TextView);
+        loginScreenLabel = (TextView) findViewById(R.id.loginScreenLabel_TextView);
+        login = (TextView) findViewById(R.id.login_TextView);
+
+        username = (EditText) findViewById(R.id.username_EditText);
+        password = (EditText) findViewById(R.id.password_EditText);
+
+        newAccount = (Button) findViewById(R.id.newAccount_Button);
+
+        newAccount.setOnClickListener(this);
+
+
 
 
         //Login_Button = (Button) findViewById(R.id.Login_Button);
@@ -74,7 +92,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        //switch(v.getId()){
+        switch(v.getId()){
+
+            case R.id.newAccount_Button:
+                Intent intent2CreateNewAccountPage = new Intent(MainActivity.this, CreateNewAccount.class);
+                startActivity(intent2CreateNewAccountPage);
+                break;
+
             //case R.id.Login_Button:
             //    prog.setVisibility(View.VISIBLE);
             //    sendData();
@@ -83,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
              //   Intent intent2CreateNewAccountPage = new Intent(MainActivity.this, CreateNewAccount.class);
              //   startActivity(intent2CreateNewAccountPage);
              //   break;
-       // }
+        }
     }
 
     private void sendData() {
