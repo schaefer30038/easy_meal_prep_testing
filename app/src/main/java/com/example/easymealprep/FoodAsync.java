@@ -57,11 +57,11 @@ public class FoodAsync {
     public class UpdateFoodAsync extends AsyncTask<Object,Void,Void> {
         @Override
         protected Void doInBackground(Object... objects) {
-            int foodID = objects[0];
-            String foodName = objects[1];
-            String foodDescription = objects[2];
-            String picture = objects[3];
-            boolean bool = food.updateFood(foodID, foodName, foodDescription, picture));
+            int foodID = (int) objects[0];
+            String foodName = (String) objects[1];
+            String foodDescription = (String) objects[2];
+            String picture = (String) objects[3];
+            boolean bool = food.updateFood(foodID, foodName, foodDescription, picture);
             return null;
         }
 

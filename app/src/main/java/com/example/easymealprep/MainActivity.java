@@ -3,40 +3,20 @@ package com.example.easymealprep;
         import androidx.appcompat.app.AppCompatActivity;
 
         import android.app.Activity;
-        import android.app.AlertDialog;
-        import android.content.Context;
-        import android.content.DialogInterface;
         import android.content.Intent;
-        import android.database.Cursor;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.net.Uri;
         import android.os.Bundle;
-        import android.os.Environment;
-        import android.os.Handler;
-        import android.provider.MediaStore;
-        import android.util.Log;
         import android.view.View;
-        import android.view.inputmethod.InputMethodManager;
         import android.widget.Button;
         import android.widget.EditText;
-        import android.widget.ImageView;
         import android.widget.ProgressBar;
         import android.widget.TextView;
         import android.widget.Toast;
 
-        import com.example.easymealprep.R;
-
-        import java.io.File;
-        import java.io.FileNotFoundException;
-        import java.io.FileOutputStream;
-        import java.io.IOException;
-        import java.io.OutputStream;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     TextView title, loginScreenLabel, login;
     EditText username, password;
-    Button newAccount;
+    Button newAccount, loginB;
+    static boolean loginCheck;
 
 
     //ImageView uploadPicture_ImageView;
@@ -65,8 +45,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         password = (EditText) findViewById(R.id.password_EditText);
 
         newAccount = (Button) findViewById(R.id.newAccount_Button);
+        loginB = (Button) findViewById(R.id.loginB_Button);
 
         newAccount.setOnClickListener(this);
+        loginB.setOnClickListener(this);
 
 
 
@@ -95,48 +77,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()){
 
             case R.id.newAccount_Button:
+                System.out.println("Made it in switch statement newAccountButton");
+
                 Intent intent2CreateNewAccountPage = new Intent(MainActivity.this, CreateNewAccount.class);
                 startActivity(intent2CreateNewAccountPage);
                 break;
 
-            //case R.id.Login_Button:
-            //    prog.setVisibility(View.VISIBLE);
-            //    sendData();
-            //    break;
-            //case R.id.CreateNewAccount_Button:
-             //   Intent intent2CreateNewAccountPage = new Intent(MainActivity.this, CreateNewAccount.class);
-             //   startActivity(intent2CreateNewAccountPage);
-             //   break;
+            case R.id.loginB_Button:
+                System.out.println("Made it in switch statement loginB");
+//                prog.setVisibility(View.VISIBLE);
+                sendData();
+                break;
         }
     }
 
     private void sendData() {
-//        hideKeyboard(MainActivity.this);
-//        currUser = LogicUsername_PlainText.getText().toString();
-//        String pass = LoginPassword_PlainText.getText().toString();
-//        new SearchAccountAsync().execute(currUser, CreateNewAccount.encoder(pass));
-//
-//        //TODO check value of LOGIN
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run(){
-//                SearchAccountAsync.connect.closeConnection();
-//                if(login.equals("Match")){
-//                    Intent intent2Main = new Intent(MainActivity.this, MainActivity2.class);
-//                    startActivity(intent2Main);
-//                }
-//                else if(login.equals("Username")){
-//                    prog.setVisibility(View.GONE);
-//                    Toast.makeText(MainActivity.this,"Account doesn't exist",Toast.LENGTH_SHORT).show();
-//                }
-//                else{
-//                    prog.setVisibility(View.GONE);
-//                    // Show error
-//                    Toast.makeText(MainActivity.this,"Incorrect Login Credentials",Toast.LENGTH_SHORT).show();
-//                }
-//                prog.setVisibility(View.GONE);
-//            }
-//        },3000);
+        hideKeyboard(MainActivity.this);
+        String currUser = username.getText().toString();
+        String pass = password.getText().toString();
+        System.out.println("Testing BEFRORE LoginAccountAsync");
+        // FIXME CRASHING RIGHT HERE 
+        AccountAsync async = new AccountAsync();
+        async.new LoginAccountAsync().execute(currUser, pass);
+        System.out.println("Testing AFTER LoginAccountAsync");
+        while(true) {
+            System.out.println("Stuck in loop");
+            if(!Statics.loop){
+                System.out.println("Broke out of the loop");
+
+                Statics.loop = true;
+                break;
+            }
+        }
+
+        if(loginCheck){
+            System.out.println("Stuck  loginCheck");
+
+            Intent intent2Main = new Intent(MainActivity.this, MainMenu.class);
+            startActivity(intent2Main);
+        }
+        else{
+            System.out.println("loginCheck didnt work");
+
+//            prog.setVisibility(View.GONE);
+            // Show error
+            Toast.makeText(MainActivity.this,"Incorrect Login Credentials",Toast.LENGTH_SHORT).show();
+        }
+        //prog.setVisibility(View.GONE);
+
 
     }
     public static void hideKeyboard(Activity activity) {

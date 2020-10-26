@@ -9,9 +9,10 @@ public class AccountAsync {
     public class LoginAccountAsync extends AsyncTask<String,Void,Void> {
         @Override
         protected Void doInBackground(String... strings) {
+            System.out.println("Entered in LoginAccountAsync:doInBackground ");
             String accountName = strings[0];
             String password = strings[1];
-            Statics.login = account.loginAccount(accountName,password);
+            MainActivity.loginCheck = account.loginAccount(accountName,password);
             return null;
         }
 
