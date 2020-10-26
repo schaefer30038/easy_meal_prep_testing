@@ -100,9 +100,9 @@ public class Account {
 			cstmt.setString(4, email);
 			cstmt.registerOutParameter(5, Types.VARCHAR);
 			cstmt.executeUpdate();
-			
+
 			String status = cstmt.getString(5);
-			
+
 			if (status.equals("Success")) {
 				this.userPassword = password;
 				this.userName = username;
@@ -115,7 +115,7 @@ public class Account {
 		}
 		return false;
 	}
-	
+
 	protected ResultSet getFavorite() {
 		String sql = "select f.foodID from Favorite f where f.userAccount = \"" + this.accountName + "\";";
 		try {
@@ -126,17 +126,17 @@ public class Account {
 		}
 		return null;
 	}
-	
+
 	protected boolean setFavorite(int foodID) {
 		try {
 			cstmt = conn.prepareCall("call setFavorite(?,?,?);");
 			cstmt.setString(1, this.accountName);
 			cstmt.setInt(2, foodID);
 			cstmt.registerOutParameter(3, Types.VARCHAR);
-			
+
 			cstmt.executeUpdate();
 			String status = cstmt.getString(3);
-			
+
 			if (status.equals("Success")) {
 				return true;
 			}
@@ -145,7 +145,7 @@ public class Account {
 		}
 		return false;
 	}
-	
+
 	protected boolean deleteFavorite(int foodID) {
 		String sql = "delete from Favorite where foodID = \"" + foodID + "\";";
 		try {
@@ -156,20 +156,20 @@ public class Account {
 		}
 		return false;
 	}
-	
+
 	protected String getUserAccount() {
 		return this.accountName;
 	}
-	
+
 	protected String getUserEmail() {
 		return this.userEmail;
 	}
-	
+
 	protected String getUserPassword() {
 		return this.userPassword;
 	}
-	
+
 	protected String getUserName() {
-		 return this.userName;
+		return this.userName;
 	}
 }
