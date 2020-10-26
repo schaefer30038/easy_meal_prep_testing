@@ -1,3 +1,5 @@
+package com.example.easymealprep;
+
 import java.sql.*;
 
 public class Account {

@@ -1,3 +1,5 @@
+package com.example.easymealprep;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
