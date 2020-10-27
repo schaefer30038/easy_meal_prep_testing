@@ -5,7 +5,20 @@ import android.os.AsyncTask;
 import java.sql.ResultSet;
 
 public class FoodAsync {
-    Food food = new Food(Statics.connection.getConnection(), AccountAsync.account.getUserAccount());
+    Food food;
+
+    public class InitFoodAsync extends AsyncTask<String,Void,Void> {
+        @Override
+        protected Void doInBackground(String... strings) {
+            food = new Food(Statics.connection.getConnection(), AccountAsync.account.getUserAccount());
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Statics.loop = false;
+        }
+    }
 
     public class CreateFoodAsync extends AsyncTask<String,Void,Void> {
         @Override

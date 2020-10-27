@@ -4,8 +4,20 @@ import android.os.AsyncTask;
 import java.sql.ResultSet;
 
 public class AccountAsync {
-    static Account account = new Account(Statics.connection.getConnection());
+    static Account account;
 
+    public class InitAccountAsync extends AsyncTask<String,Void,Void> {
+        @Override
+        protected Void doInBackground(String... strings) {
+            account = new Account(Statics.connection.getConnection());
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Statics.loop = false;
+        }
+    }
     public class LoginAccountAsync extends AsyncTask<String,Void,Void> {
         @Override
         protected Void doInBackground(String... strings) {
