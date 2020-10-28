@@ -13,11 +13,12 @@ package com.example.easymealprep;
         import android.widget.TextView;
         import android.widget.Toast;
 
+        import static com.example.easymealprep.Statics.check;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     TextView title, loginScreenLabel, login;
     EditText username, password;
     Button newAccount, loginB;
-    static boolean loginCheck;
 
 
     //ImageView uploadPicture_ImageView;
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         title = (TextView) findViewById(R.id.title_TextView);
         loginScreenLabel = (TextView) findViewById(R.id.loginScreenLabel_TextView);
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void run() {
                 // Actions to do after 10 seconds
                 System.out.println("Inside sendData handler, Run method");
-                if(loginCheck){
+                if(check){
                     System.out.println("loginCheck works");
                     Intent intent2Main = new Intent(MainActivity.this, CreateNewAccount.class);
                     startActivity(intent2Main);

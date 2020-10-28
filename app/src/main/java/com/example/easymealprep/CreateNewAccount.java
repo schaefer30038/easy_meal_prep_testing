@@ -37,7 +37,9 @@ import android.widget.Toast;
 import com.example.easymealprep.MainActivity;
 import com.example.easymealprep.R;
 
-public class CreateNewAccount extends AppCompatActivity {
+import static com.example.easymealprep.Statics.check;
+
+public class CreateNewAccount extends AppCompatActivity implements View.OnClickListener{
     TextView newAccountLabel;
     EditText username, password, name, email;
     Button createAccount;
@@ -54,6 +56,7 @@ public class CreateNewAccount extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_new_account);
 
         newAccountLabel = (TextView) findViewById(R.id.newAccountLabel_TextView);
 
@@ -64,7 +67,7 @@ public class CreateNewAccount extends AppCompatActivity {
 
         createAccount = (Button) findViewById(R.id.createAccount_Button);
 
-        //createAccount.setOnClickListener(this);
+        createAccount.setOnClickListener(this);
 
 
 //        setContentView(R.layout.activity_create_new_account);
@@ -96,55 +99,48 @@ public class CreateNewAccount extends AppCompatActivity {
 //        });
     }
 
-//    @Override
-//    public void onClick(View v) {
-//        switch(v.getId()) {
-//            case R.id.createAccount_Button:  // TODO do the actions
-//                break;
-//        }
-//    }
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.createAccount_Button:  // TODO do the actions
+                System.out.println("Create account");
+                sendData();
+                break;
+        }
+    }
 
-//    private void sendData() {
-//        String username = newAccountUsername_PlainText.getText().toString();
-//        AlertDialog.Builder b = new AlertDialog.Builder(CreateNewAccount.this);
-//        String pass = newAccountPassword_PlainText.getText().toString();
-//        String adr = newAccountAddress_PlainText.getText().toString();
-//        String phone = newAccountPhone_PlainText.getText().toString();
-//        String email = newAccountEmail_PlainText.getText().toString();
-//        if(!(username.length() == 0 || pass.length() == 0 || adr.length() == 0 || phone.length() == 0 || email.length() == 0 )){
-//            //Send data to back end with photo
-//            new CreateAccountAsync().execute(username, encoder(pass), null, adr, email, phone);
-//
-//            // TODO: accMade will be "Success" if account is created and it will be "Exist" if account already exists
-//            //if(accMade.equals("Success")) {
-//
-//            while(!MainActivity.done){
-//                if(MainActivity.done){
-//                    MainActivity.done = false;
-//                    break;
-//                }
-//            }
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run(){
-//                    System.out.print(accMade);
-//                    if(accMade.equals("Success")){
-//                        Intent intent2Main = new Intent(CreateNewAccount.this, MainActivity.class);
-//                        startActivity(intent2Main);
-//                    }
-//                    else{
-//                        // Show error
-//                        Toast.makeText(CreateNewAccount.this,"Account already exists",Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            },1000);
-//
-//
-//
-//
-//        }
-//
-//    }
+    private void sendData() {
+        AlertDialog.Builder b = new AlertDialog.Builder(CreateNewAccount.this);
+        String usernameString = username.getText().toString();
+        String passwordString = password.getText().toString();
+        String nameString = name.getText().toString();
+        String emailString = email.getText().toString();
+//        if(!(usernameString.length() == 0 || passwordString.length() == 0 || nameString.length() == 0 || emailString.length() == 0)){
+        if(true){
+            //Send data to back end with photo
+            AccountAsync async = new AccountAsync();
+            async.new CreateAccountAsync().execute(usernameString, passwordString, nameString, emailString);
+
+            // TODO: accMade will be "Success" if account is created and it will be "Exist" if account already exists
+            //if(accMade.equals("Success")) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run(){
+                    System.out.print(check);
+                    if(check){
+                        Intent intent2Main = new Intent(CreateNewAccount.this, MainActivity.class);
+                        startActivity(intent2Main);
+                    }
+                    else{
+                        // Show error
+                        Toast.makeText(CreateNewAccount.this,"Account already exists",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            },1500);
+
+        }
+
+    }
 
 //    private void openGallery() {
 //        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);

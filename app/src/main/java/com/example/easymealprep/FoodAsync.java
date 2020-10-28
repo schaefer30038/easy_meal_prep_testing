@@ -10,7 +10,7 @@ public class FoodAsync {
     public class InitFoodAsync extends AsyncTask<String,Void,Void> {
         @Override
         protected Void doInBackground(String... strings) {
-            food = new Food(Statics.connection.getConnection(), AccountAsync.account.getUserAccount());
+            food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
             return null;
         }
         @Override
