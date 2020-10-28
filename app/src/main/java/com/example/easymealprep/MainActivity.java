@@ -5,6 +5,7 @@ package com.example.easymealprep;
         import android.app.Activity;
         import android.content.Intent;
         import android.os.Bundle;
+        import android.os.Handler;
         import android.view.View;
         import android.widget.Button;
         import android.widget.EditText;
@@ -50,27 +51,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         newAccount.setOnClickListener(this);
         loginB.setOnClickListener(this);
 
-
-
-
-        //Login_Button = (Button) findViewById(R.id.Login_Button);
-        //CreateNewAccount_Button = (Button) findViewById(R.id.CreateNewAccount_Button);
         //prog = (ProgressBar)findViewById(R.id.progressBar) ;
         //prog.setVisibility(View.GONE);
-
-
-
-
-        //LogicUsername_PlainText = (EditText) findViewById(R.id.LogicUsername_PlainText);
-        //LoginPassword_PlainText = (EditText) findViewById(R.id.LoginPassword_PlainText);
-
-
-        //Login_Button.setOnClickListener(this);
-        //CreateNewAccount_Button.setOnClickListener(this);
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        username.setText("");
+        password.setText("");
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -78,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.newAccount_Button:
                 System.out.println("Made it in switch statement newAccountButton");
-
                 Intent intent2CreateNewAccountPage = new Intent(MainActivity.this, CreateNewAccount.class);
                 startActivity(intent2CreateNewAccountPage);
                 break;
@@ -100,32 +95,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AccountAsync async = new AccountAsync();
         async.new LoginAccountAsync().execute(currUser, pass);
         System.out.println("Testing AFTER LoginAccountAsync");
-        while(true) {
-            System.out.println("Stuck in loop");
-            if(!Statics.loop){
-                System.out.println("Broke out of the loop");
 
-                Statics.loop = true;
-                break;
-            }
-        }
-
-        if(loginCheck){
-            System.out.println("Stuck  loginCheck");
-
-            Intent intent2Main = new Intent(MainActivity.this, MainMenu.class);
-            startActivity(intent2Main);
-        }
-        else{
-            System.out.println("loginCheck didnt work");
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                // Actions to do after 10 seconds
+                System.out.println("Inside sendData handler, Run method");
+                if(loginCheck){
+                    System.out.println("loginCheck works");
+                    Intent intent2Main = new Intent(MainActivity.this, CreateNewAccount.class);
+                    startActivity(intent2Main);
+                }
+                else{
+                    System.out.println("loginCheck didnt work");
 
 //            prog.setVisibility(View.GONE);
-            // Show error
-            Toast.makeText(MainActivity.this,"Incorrect Login Credentials",Toast.LENGTH_SHORT).show();
-        }
-        //prog.setVisibility(View.GONE);
-
-
+                    // Show error
+                    Toast.makeText(MainActivity.this,"Incorrect Login Credentials",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, 2000);
     }
     public static void hideKeyboard(Activity activity) {
 //        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);

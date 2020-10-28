@@ -29,7 +29,7 @@ public class AccountAsync {
             String password = strings[1];
             System.out.println("login start");
             MainActivity.loginCheck = false;
-            MainActivity.loginCheck = Statics.connect.loginAccount("Admin", "Administrator");
+            MainActivity.loginCheck = Statics.connect.loginAccount(username, password);
             System.out.println(MainActivity.loginCheck + "do in bac");
             return null;
         }
