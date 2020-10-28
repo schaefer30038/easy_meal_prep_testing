@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import java.sql.ResultSet;
 
 public class AccountAsync {
-    static Account account;
+    Account account;
 
     public class InitAccountAsync extends AsyncTask<String,Void,Void> {
         @Override
@@ -18,19 +18,26 @@ public class AccountAsync {
             Statics.loop = false;
         }
     }
-    @SuppressWarnings("deprecation")
     public class LoginAccountAsync extends AsyncTask<String,Void,Void> {
         @Override
         protected Void doInBackground(String... strings) {
-            if (Statics.connect == null)
-                System.out.println("new connect");
-                Statics.connect = new SQLConnect();
-            String username = strings[0];
+            System.out.println("Entered in LoginAccountAsync:doInBackground ");
+            String accountName = strings[0];
             String password = strings[1];
-            System.out.println("login start");
-            MainActivity.loginCheck = false;
-            MainActivity.loginCheck = Statics.connect.loginAccount(username, password);
-            System.out.println(MainActivity.loginCheck + "do in bac");
+            account = new Account(Statics.connection.getConnection());
+            Statics.check = account.loginAccount(accountName,password);
+//            return null;
+//            if (Statics.connect == null)
+//                System.out.println("new connect");
+//                Statics.connect = new SQLConnect();
+//            String username = strings[0];
+//            String password = strings[1];
+//            System.out.println("login start");
+//            Statics.check = false;
+//            Statics.check = Statics.connect.loginAccount("Admin", "Administrator");
+////            Statics.check = connect.loginAccount(username, password);
+////            Statics.loop = true;
+            System.out.println(Statics.check + "do in bac");
             return null;
         }
 
@@ -40,25 +47,41 @@ public class AccountAsync {
             super.onPostExecute(aVoid);
             System.out.println("onPost exec2");
             Statics.loop = false;
+//            Statics.connect.closeConnection();
             System.out.println("onPost exec3");
         }
     }
 
     public class CreateAccountAsync extends AsyncTask<String,Void,Void> {
+        SQLConnect conn;
         @Override
         protected Void doInBackground(String... strings) {
+//            conn = new SQLConnect();
+//            String accountName = strings[0];
+//            String userPassword = strings[1];
+//            String userName = strings[2];
+//            String userEmail = strings[3];
+//            System.out.println("create async");
+////            Statics.check = Statics.connect.createAccount(accountName, userPassword, userName, userEmail);
+//            Statics.check = conn.createAccount("tsewang", "tsewang", "tsewang", "tsewang");
+//            return null;
+            account = new Account(Statics.connection.getConnection());
             String accountName = strings[0];
             String userPassword = strings[1];
             String userName = strings[2];
             String userEmail = strings[3];
-            Statics.login = account.createAccount(accountName, userPassword, userName, userEmail);
+            System.out.println("create async");
+//            Statics.check = account.createAccount("tsewang2", "tsewang2", "tsewang2", "tsewang2");
+            Statics.check = Statics.connect.createAccount(accountName, userPassword, userName, userEmail);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            System.out.println("onPost exec");
             Statics.loop = false;
+//            conn.closeConnection();
         }
     }
 
@@ -66,7 +89,7 @@ public class AccountAsync {
         @Override
         protected Void doInBackground(String... strings) {
             String userPassword = strings[0];
-            Statics.login = account.deleteAccount(userPassword);
+            Statics.check = account.deleteAccount(userPassword);
             return null;
         }
 
@@ -83,7 +106,7 @@ public class AccountAsync {
             String userPassword = strings[0];
             String userName = strings[1];
             String userEmail = strings[2];
-            Statics.login = account.updateAccount(userPassword, userName, userEmail);
+            Statics.check = account.updateAccount(userPassword, userName, userEmail);
             return null;
         }
 
@@ -112,7 +135,7 @@ public class AccountAsync {
         @Override
         protected Void doInBackground(Integer... integers) {
             int foodID = integers[0];
-            Statics.login = account.setFavorite(foodID);
+            Statics.check = account.setFavorite(foodID);
             return null;
         }
 
@@ -127,7 +150,7 @@ public class AccountAsync {
         @Override
         protected Void doInBackground(Integer... integers) {
             int foodID = integers[0];
-            Statics.login = account.deleteFavorite(foodID);
+            Statics.check = account.deleteFavorite(foodID);
             return null;
         }
 
