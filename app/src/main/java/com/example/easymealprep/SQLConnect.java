@@ -106,34 +106,27 @@ public class SQLConnect {
         return false;
     }
 
-    protected String createAccount(String username, String password, Blob picture,
-                                   String apiary, String email, String phone) {
+    protected boolean createAccount(String accountName, String password, String name, String email) {
 
         try {
-            // Query to initialize createAccount stored procedure in the database
-            cstmt = conn.prepareCall("call createAccount(?,?,?,?,?,?,?);");
-            cstmt.setString(1, username);
+            cstmt = conn.prepareCall("call createAccount(?,?,?,?,?)");
+            cstmt.setString(1, accountName);
             cstmt.setString(2, password);
-            cstmt.setBlob(3, picture);
-            cstmt.setString(4, apiary);
-            cstmt.setString(5, email);
-            cstmt.setString(6, phone);
-            cstmt.registerOutParameter(7, Types.VARCHAR);
+            cstmt.setString(3, name);
+            cstmt.setString(4, email);
+            cstmt.registerOutParameter(5, Types.VARCHAR);
+
             cstmt.executeUpdate();
 
-            // Get output parameter from the procedure
-            status = cstmt.getString(7);
-
-            // Checks if the query is executed successfully by output parameter
+            String status = cstmt.getString(5);
             if (status.equals("Success")) {
-                System.out.println("Successfully created account");
-            } else {
-                System.out.println("The acount already exists");
+                return true;
             }
+
         } catch (SQLException e) {
-            System.out.println("createAccount: " + e.getMessage());
+            System.out.println("Error: createAccount " + e.getMessage());
         }
-        return status;
+        return false;
 
     }
 
