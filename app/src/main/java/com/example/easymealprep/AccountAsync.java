@@ -18,20 +18,29 @@ public class AccountAsync {
             Statics.loop = false;
         }
     }
+    @SuppressWarnings("deprecation")
     public class LoginAccountAsync extends AsyncTask<String,Void,Void> {
         @Override
         protected Void doInBackground(String... strings) {
-            System.out.println("Entered in LoginAccountAsync:doInBackground ");
-            String accountName = strings[0];
+            if (Statics.connect == null)
+                System.out.println("new connect");
+                Statics.connect = new SQLConnect();
+            String username = strings[0];
             String password = strings[1];
-            MainActivity.loginCheck = account.loginAccount(accountName,password);
+            System.out.println("login start");
+            MainActivity.loginCheck = false;
+            MainActivity.loginCheck = Statics.connect.loginAccount("Admin", "Administrator");
+            System.out.println(MainActivity.loginCheck + "do in bac");
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            System.out.println("onPost exec1");
             super.onPostExecute(aVoid);
+            System.out.println("onPost exec2");
             Statics.loop = false;
+            System.out.println("onPost exec3");
         }
     }
 
