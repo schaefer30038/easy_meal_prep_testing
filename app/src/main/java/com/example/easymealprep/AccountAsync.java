@@ -41,7 +41,6 @@ public class AccountAsync {
     }
 
     public class CreateAccountAsync extends AsyncTask<String,Void,Void> {
-        SQLConnect conn;
         @Override
         protected Void doInBackground(String... strings) {
 //            conn = new SQLConnect();
