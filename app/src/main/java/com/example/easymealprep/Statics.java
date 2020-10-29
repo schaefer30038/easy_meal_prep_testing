@@ -6,5 +6,4 @@ public class Statics {
     static boolean check = false;
     static String currUserAccount,currUserEmail,currPassword;
     static SQLConnect connect;
-    static AccountAsync async = new AccountAsync();;
 }
