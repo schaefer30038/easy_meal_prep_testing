@@ -72,7 +72,7 @@ public class AccountAsync {
             String userEmail = strings[3];
             System.out.println("create async");
 //            Statics.check = account.createAccount("tsewang2", "tsewang2", "tsewang2", "tsewang2");
-            Statics.check = Statics.connect.createAccount(accountName, userPassword, userName, userEmail);
+            Statics.check = account.createAccount(accountName, userPassword, userName, userEmail);
             return null;
         }
 
