@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         title = (TextView) findViewById(R.id.title_TextView);
-        loginScreenLabel = (TextView) findViewById(R.id.loginScreenLabel_TextView);
+        // loginScreenLabel = (TextView) findViewById(R.id.loginScreenLabel_TextView);
         login = (TextView) findViewById(R.id.login_TextView);
 
         username = (EditText) findViewById(R.id.username_EditText);
