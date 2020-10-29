@@ -6,18 +6,6 @@ import java.sql.ResultSet;
 public class AccountAsync {
     Account account;
 
-    public class InitAccountAsync extends AsyncTask<String,Void,Void> {
-        @Override
-        protected Void doInBackground(String... strings) {
-            account = new Account(Statics.connection.getConnection());
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Statics.loop = false;
-        }
-    }
     public class LoginAccountAsync extends AsyncTask<String,Void,Void> {
         @Override
         protected Void doInBackground(String... strings) {
@@ -89,6 +77,7 @@ public class AccountAsync {
         @Override
         protected Void doInBackground(String... strings) {
             String userPassword = strings[0];
+            account = new Account(Statics.connection.getConnection());
             Statics.check = account.deleteAccount(userPassword);
             return null;
         }
@@ -106,6 +95,7 @@ public class AccountAsync {
             String userPassword = strings[0];
             String userName = strings[1];
             String userEmail = strings[2];
+            account = new Account(Statics.connection.getConnection());
             Statics.check = account.updateAccount(userPassword, userName, userEmail);
             return null;
         }
@@ -120,6 +110,7 @@ public class AccountAsync {
     public class GetFavoriteAsync extends AsyncTask<Void,Void,Void> {
         @Override
         protected Void doInBackground(Void... voids) {
+            account = new Account(Statics.connection.getConnection());
             ResultSet resultSet = account.getFavorite();
             return null;
         }
@@ -135,6 +126,7 @@ public class AccountAsync {
         @Override
         protected Void doInBackground(Integer... integers) {
             int foodID = integers[0];
+            account = new Account(Statics.connection.getConnection());
             Statics.check = account.setFavorite(foodID);
             return null;
         }
@@ -150,6 +142,7 @@ public class AccountAsync {
         @Override
         protected Void doInBackground(Integer... integers) {
             int foodID = integers[0];
+            account = new Account(Statics.connection.getConnection());
             Statics.check = account.deleteFavorite(foodID);
             return null;
         }

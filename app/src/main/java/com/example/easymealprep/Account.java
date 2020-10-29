@@ -27,6 +27,10 @@ public class Account {
 		}
 	}
 
+	//  changed this.userPassword to Statics.currPassword
+	// 	changed this.accountName to Statics.currUserAccount
+	//  changed this.userEmail to Statics.currUserEmail
+	//  changed this.userName to Statics.currName
 	protected boolean loginAccount(String accountName, String password) {
 		try {
 			cstmt = conn.prepareCall("call loginAccount(?,?,?,?)");
@@ -37,12 +41,12 @@ public class Account {
 
 			cstmt.executeUpdate();
 
-			this.userName = cstmt.getString(3);
-			this.userEmail = cstmt.getString(4);
+			Statics.currName = cstmt.getString(3);
+			Statics.currUserEmail = cstmt.getString(4);
 
 			if (!userName.equals("NULL")) {
-				this.accountName = accountName;
-				this.userPassword = password;
+				Statics.currUserAccount = accountName;
+				Statics.currPassword = password;
 				return true;
 			}
 		} catch (SQLException e) {
@@ -73,15 +77,17 @@ public class Account {
 		return false;
 	}
 
+	//  changed this.accountName to Statics.currUserAccount
+	//	changed this.userPassword to Statics.currPassword
 	protected boolean deleteAccount(String password) {
-		if (this.accountName == null || !this.userPassword.equals(password)) {
+		if (Statics.currUserAccount == null || !Statics.currPassword.equals(password)) {
 			return false;
 		}
 
 		try {
-			stmt.execute("delete from Account where userAccount = \"" + accountName + "\";");
-			this.accountName = null;
-			this.userPassword = null;
+			stmt.execute("delete from Account where userAccount = \"" + Statics.currUserAccount + "\";");
+			Statics.currUserAccount = null;
+			Statics.currPassword = null;
 
 			return true;
 		} catch (SQLException e) {
@@ -90,11 +96,15 @@ public class Account {
 		return false;
 	}
 
+	//	changed this.userPassword to Statics.currPassword
+	// 	changed this.userName to Statics.currName
+	// 	changed this.userEmail to Statics.currUserEmail
+	// 	changed this.accountName to Statics.currUserAccount
 	protected boolean updateAccount(String password, String username, String email) {
 
 		try {
 			cstmt = conn.prepareCall("call updateAccount(?,?,?,?,?)");
-			cstmt.setString(1, this.accountName);
+			cstmt.setString(1, Statics.currUserAccount);
 			cstmt.setString(2, password);
 			cstmt.setString(3, username);
 			cstmt.setString(4, email);
@@ -104,9 +114,9 @@ public class Account {
 			String status = cstmt.getString(5);
 
 			if (status.equals("Success")) {
-				this.userPassword = password;
-				this.userName = username;
-				this.userEmail = email;
+				Statics.currPassword = password;
+				Statics.currName = username;
+				Statics.currUserEmail = email;
 				return true;
 			}
 
@@ -116,8 +126,9 @@ public class Account {
 		return false;
 	}
 
+	// 	changed this.accountName to Statics.currUserAccount
 	protected ResultSet getFavorite() {
-		String sql = "select f.foodID from Favorite f where f.userAccount = \"" + this.accountName + "\";";
+		String sql = "select f.foodID from Favorite f where f.userAccount = \"" + Statics.currUserAccount + "\";";
 		try {
 			ResultSet rs = stmt.executeQuery(sql);
 			return rs;
@@ -127,10 +138,11 @@ public class Account {
 		return null;
 	}
 
+	// 	changed this.accountName to Statics.currUserAccount
 	protected boolean setFavorite(int foodID) {
 		try {
 			cstmt = conn.prepareCall("call setFavorite(?,?,?);");
-			cstmt.setString(1, this.accountName);
+			cstmt.setString(1, Statics.currUserAccount);
 			cstmt.setInt(2, foodID);
 			cstmt.registerOutParameter(3, Types.VARCHAR);
 
