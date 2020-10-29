@@ -44,7 +44,7 @@ public class Account {
 			Statics.currName = cstmt.getString(3);
 			Statics.currUserEmail = cstmt.getString(4);
 
-			if (!userName.equals("NULL")) {
+			if (!Statics.currName.equals("NULL")) {
 				Statics.currUserAccount = accountName;
 				Statics.currPassword = password;
 				return true;
