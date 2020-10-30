@@ -1,5 +1,3 @@
-package com.example.easymealprep;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -106,7 +104,7 @@ public class Food {
 	}
 
 	protected ResultSet searchFood(String foodName) {
-		String sql = "select * from Food where foodName = \"" + foodName + "\"; ";
+		String sql = "select * from Food where foodName like \'%" + foodName + "%\'; ";
 		ResultSet rs = null;
 		try {
 			rs = stmt.executeQuery(sql);
