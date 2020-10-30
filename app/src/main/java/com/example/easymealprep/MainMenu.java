@@ -8,22 +8,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainMenu extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     Button quit;
-    NavigationView nav;
+    BottomNavigationView nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         quit = (Button) findViewById(R.id.Quit);
-            nav = (NavigationView) findViewById(R.id.bottomNav);
-        nav.setNavigationItemSelectedListener(this);
+        nav = (BottomNavigationView) findViewById(R.id.bottomNav);
+        nav.setOnNavigationItemSelectedListener(this);
 
         quit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Statics.connection.closeConnection();
                 Intent intent2login = new Intent(MainMenu.this, MainActivity.class);
                 startActivity(intent2login);
             }
@@ -39,10 +40,12 @@ public class MainMenu extends AppCompatActivity implements NavigationView.OnNavi
             // Handle the camera action
         } else if (id == R.id.nav_search) {
 
+        } else if (id == R.id.nav_add_recipe) {
+
         } else if (id == R.id.nav_favorites) {
 
-
-
+        } else if (id == R.id.nav_setting) {
+            
         }
         return true;
     }
