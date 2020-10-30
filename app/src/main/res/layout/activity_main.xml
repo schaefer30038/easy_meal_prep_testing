@@ -8,27 +8,41 @@
     android:background="@drawable/background_gradient"
     >
 
+
+    <ImageView
+        android:id="@+id/EZ_symbol"
+        android:layout_width="140dp"
+        android:layout_height="129dp"
+        android:background="@drawable/ez_symbol"
+        app:layout_constraintBottom_toTopOf="@id/login_TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32" />
+
     <TextView
         android:id="@+id/title_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="16dp"
-        android:text="Easy Meal Prep"
+        android:fontFamily="@font/roboto_black"
+        android:text="MEAL PREP"
+        android:textColor="#000000"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/EZ_symbol" />
 
     <TextView
         android:id="@+id/login_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome!"
+        android:theme="@style/TitleText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39" />
+        app:layout_constraintVertical_bias="0.47000003" />
 
     <EditText
         android:id="@+id/username_EditText"
@@ -52,6 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/username_EditText" />
 
     <Button
+        android:theme="@style/NormalButton"
         android:id="@+id/newAccount_Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -64,6 +79,7 @@
         app:layout_constraintVertical_bias="0.19999999" />
 
     <Button
+        android:theme="@style/NormalButton"
         android:id="@+id/loginB_Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
