@@ -11,4 +11,14 @@
     <color name="black">#000000</color>
     <color name="orangeFruit">#f9d423</color>
     <color name='pinkFruit'>#f97e50</color>
+    <color name='vibrantPurple'>#b721ff</color>
+    <color name='lightBlue'>#21d4fd</color>
+    <color name='white'>#ffffff</color>
+    <color name='darkGray'>#5e5d5d</color>
+    <color name='purple1'>#b224ef</color>
+    <color name='purple2'>#7579ff</color>
+    <color name='darkPurple'>#6e45e2</color>
+    <color name='mellowBlue'>#88d3ce</color>
+    <color name='pinkRed'>#ff5858</color>
+    <color name='brownOrange'>#f09819</color>
 </resources>

@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingFragment">
+    tools:context=".SettingFragment"
+    android:background="@drawable/blue_gradient"
+    android:theme="@style/NormalButton">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -12,32 +14,31 @@
         android:id="@+id/delete_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="340dp"
         android:text="Delete Account"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/update_profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/help" />
 
     <Button
         android:id="@+id/help"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginLeft="26dp"
-        android:layout_marginBottom="72dp"
         android:text="Help"
-        app:layout_constraintBottom_toTopOf="@+id/delete_account"
-        app:layout_constraintStart_toStartOf="@+id/delete_account" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/delete_account"
+        app:layout_constraintStart_toStartOf="@+id/delete_account"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/update_profile"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="90dp"
         android:text="Update Profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/delete_account"
         app:layout_constraintStart_toStartOf="@+id/delete_account"
-        app:layout_constraintTop_toBottomOf="@+id/delete_account" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.76" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

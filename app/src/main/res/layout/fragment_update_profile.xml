@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpdateProfileFragment">
+    tools:context=".UpdateProfileFragment"
+    android:background="@drawable/blue_gradient">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -22,14 +23,15 @@
         android:id="@+id/etUpdateName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="436dp"
         android:ems="10"
         android:hint="Enter new name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35000002" />
 
     <EditText
         android:id="@+id/etUpdatePassword"
@@ -45,9 +47,11 @@
 
     <Button
         android:id="@+id/update_confirm"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Update"
+        android:theme="@style/NormalButton"
         app:layout_constraintEnd_toEndOf="@+id/etUpdateEmailAddress"
         app:layout_constraintStart_toStartOf="@+id/etUpdateEmailAddress"
         app:layout_constraintTop_toBottomOf="@+id/etUpdateEmailAddress" />
