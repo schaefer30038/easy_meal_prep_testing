@@ -92,9 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String currUser = username.getText().toString();
         String pass = password.getText().toString();
         System.out.println("Testing BEFRORE LoginAccountAsync");
-        // FIXME CRASHING RIGHT HERE 
-//        AccountAsync async = new AccountAsync();
-//        async.new LoginAccountAsync().execute(currUser, pass);
         new LoginAccountAsync().execute(currUser,pass);
         System.out.println("Testing AFTER LoginAccountAsync");
     }
@@ -109,9 +106,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
     public class LoginAccountAsync extends AsyncTask<String,Void,Void> {
+        Account account;
         @Override
         protected Void doInBackground(String... strings) {
-            Account account;
+            Statics.connection = new SQLConnection();
+
             System.out.println("Entered in LoginAccountAsync:doInBackground ");
             String accountName = strings[0];
             String password = strings[1];
@@ -126,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             System.out.println("onPost exec1");
             super.onPostExecute(aVoid);
             System.out.println("onPost exec2");
-            Statics.loop = false;
             System.out.println("onPost exec3");
             System.out.println("Inside sendData handler, Run method");
             if(check){

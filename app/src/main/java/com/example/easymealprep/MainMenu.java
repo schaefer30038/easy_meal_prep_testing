@@ -24,6 +24,7 @@ public class MainMenu extends AppCompatActivity implements BottomNavigationView.
         quit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Statics.connection.closeConnection();
                 Intent intent2login = new Intent(MainMenu.this, MainActivity.class);
                 startActivity(intent2login);
             }

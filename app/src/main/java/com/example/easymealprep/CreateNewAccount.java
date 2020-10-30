@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -118,28 +119,41 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
 //        if(!(usernameString.length() == 0 || passwordString.length() == 0 || nameString.length() == 0 || emailString.length() == 0)){
         if(true){
             //Send data to back end with photo
-            AccountAsync async = new AccountAsync();
-            async.new CreateAccountAsync().execute(usernameString, passwordString, nameString, emailString);
-
-            // TODO: accMade will be "Success" if account is created and it will be "Exist" if account already exists
-            //if(accMade.equals("Success")) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run(){
-                    System.out.print(check);
-                    if(check){
-                        Intent intent2Main = new Intent(CreateNewAccount.this, MainActivity.class);
-                        startActivity(intent2Main);
-                    }
-                    else{
-                        // Show error
-                        Toast.makeText(CreateNewAccount.this,"Account already exists",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            },1500);
-
+            new CreateAccountAsync().execute(usernameString, passwordString, nameString, emailString);
         }
 
+    }
+    public class CreateAccountAsync extends AsyncTask<String,Void,Void> {
+        Account account;
+        SQLConnection connect;
+        @Override
+        protected Void doInBackground(String... strings) {
+            connect = new SQLConnection();
+            account = new Account(connect.getConnection());
+            String accountName = strings[0];
+            String userPassword = strings[1];
+            String userName = strings[2];
+            String userEmail = strings[3];
+            System.out.println("create async");
+            Statics.check = account.createAccount(accountName, userPassword, userName, userEmail);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            System.out.println("onPost exec");
+            connect.closeConnection();
+            System.out.print(check);
+            if(check){
+                Intent intent2Main = new Intent(CreateNewAccount.this, MainActivity.class);
+                startActivity(intent2Main);
+            }
+            else{
+                // Show error
+                Toast.makeText(CreateNewAccount.this,"Account already exists",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 //    private void openGallery() {
