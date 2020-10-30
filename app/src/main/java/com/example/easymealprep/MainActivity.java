@@ -4,6 +4,7 @@ package com.example.easymealprep;
 
         import android.app.Activity;
         import android.content.Intent;
+        import android.os.AsyncTask;
         import android.os.Bundle;
         import android.os.Handler;
         import android.view.View;
@@ -92,29 +93,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String pass = password.getText().toString();
         System.out.println("Testing BEFRORE LoginAccountAsync");
         // FIXME CRASHING RIGHT HERE 
-        AccountAsync async = new AccountAsync();
-        async.new LoginAccountAsync().execute(currUser, pass);
+//        AccountAsync async = new AccountAsync();
+//        async.new LoginAccountAsync().execute(currUser, pass);
+        new LoginAccountAsync().execute(currUser,pass);
         System.out.println("Testing AFTER LoginAccountAsync");
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                // Actions to do after 10 seconds
-                System.out.println("Inside sendData handler, Run method");
-                if(check){
-                    System.out.println("loginCheck works");
-                    Intent intent2Main = new Intent(MainActivity.this, CreateNewAccount.class);
-                    startActivity(intent2Main);
-                }
-                else{
-                    System.out.println("loginCheck didnt work");
-
-//            prog.setVisibility(View.GONE);
-                    // Show error
-                    Toast.makeText(MainActivity.this,"Incorrect Login Credentials",Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, 2000);
     }
     public static void hideKeyboard(Activity activity) {
 //        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -125,5 +107,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            view = new View(activity);
 //        }
 //        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+    public class LoginAccountAsync extends AsyncTask<String,Void,Void> {
+        @Override
+        protected Void doInBackground(String... strings) {
+            Account account;
+            System.out.println("Entered in LoginAccountAsync:doInBackground ");
+            String accountName = strings[0];
+            String password = strings[1];
+            account = new Account(Statics.connection.getConnection());
+            Statics.check = account.loginAccount(accountName,password);
+            System.out.println(Statics.check + "do in bac");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            System.out.println("onPost exec1");
+            super.onPostExecute(aVoid);
+            System.out.println("onPost exec2");
+            Statics.loop = false;
+            System.out.println("onPost exec3");
+            System.out.println("Inside sendData handler, Run method");
+            if(check){
+                System.out.println("loginCheck works");
+                Intent intent2Main = new Intent(MainActivity.this, MainMenu.class);
+                startActivity(intent2Main);
+            }
+            else {
+                System.out.println("loginCheck didnt work");
+
+//            prog.setVisibility(View.GONE);
+                // Show error
+                Toast.makeText(MainActivity.this, "Incorrect Login Credentials", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

@@ -22,7 +22,6 @@
         android:textAlignment="center"
         android:textSize="46sp"
         android:layout_height="wrap_content"
-        android:theme="@style/TitleText"
         android:text="Main Menu"
         android:gravity="center_horizontal" />
 
