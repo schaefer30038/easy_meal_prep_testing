@@ -1,3 +1,5 @@
+package com.example.easymealprep;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

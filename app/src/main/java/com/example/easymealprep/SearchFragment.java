@@ -67,7 +67,7 @@ public class SearchFragment extends Fragment {
 
         @Override
         protected ResultSet doInBackground(String... strings) {
-            food = new Food(Statics.connection.getConnection(), "tsewang");
+            food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
             String foodName = strings[0];
             ResultSet resultSet = food.searchFood(foodName);
             return resultSet;
@@ -92,6 +92,7 @@ public class SearchFragment extends Fragment {
                         array[2] = foodDescription;
                         array[3] = foodPic;
                         arrayLists.add(array);
+                        System.out.println(foodName);
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
