@@ -27,5 +27,8 @@
         <item name='android:textSize'>20sp</item>
         <item name='android:layout_margin'>20sp</item>
     </style>
+    <style name="FillInfo" parent="Theme.AppCompat">
+        <item name='android:backgroundTint'>@color/white</item>
+    </style>
 
 </resources>

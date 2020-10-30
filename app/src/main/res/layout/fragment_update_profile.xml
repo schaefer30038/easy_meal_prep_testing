@@ -10,6 +10,7 @@
     <!-- TODO: Update blank fragment layout -->
 
     <EditText
+        android:theme="@style/FillInfo"
         android:id="@+id/etUpdateEmailAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,6 +27,7 @@
         android:ems="10"
         android:hint="Enter new name"
         android:inputType="textPersonName"
+        android:theme="@style/FillInfo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -34,6 +36,7 @@
         app:layout_constraintVertical_bias="0.35000002" />
 
     <EditText
+        android:theme="@style/FillInfo"
         android:id="@+id/etUpdatePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
