@@ -28,6 +28,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View inputFragmentView = inflater.inflate(R.layout.fragment_home, container, false);
         // Inflate the layout for this fragment
+        System.out.println("home fragment");
         quit_button = (Button) inputFragmentView.findViewById(R.id.Quit);
         quit_button.setOnClickListener(new View.OnClickListener() {
             @Override

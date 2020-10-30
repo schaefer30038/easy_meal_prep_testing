@@ -1,23 +1,20 @@
 package com.example.easymealprep;
 
-        import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
-        import android.app.Activity;
-        import android.content.Intent;
-        import android.os.AsyncTask;
-        import android.os.Bundle;
-        import android.os.Handler;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.ProgressBar;
-        import android.widget.TextView;
-        import android.widget.Toast;
-
-        import static com.example.easymealprep.Statics.check;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    TextView title, loginScreenLabel, login;
+    TextView title, login;
     EditText username, password;
     Button newAccount, loginB;
 
@@ -59,13 +56,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        password.setText("");
+        if(Statics.connection != null)
+        Statics.connection.closeConnection();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        username.setText("");
-        password.setText("");
 
     }
 
@@ -127,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             System.out.println("onPost exec2");
             System.out.println("onPost exec3");
             System.out.println("Inside sendData handler, Run method");
-            if(check){
+            if(Statics.check){
                 System.out.println("loginCheck works");
                 Intent intent2Main = new Intent(MainActivity.this, MainMenu.class);
                 startActivity(intent2Main);
@@ -139,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // Show error
                 Toast.makeText(MainActivity.this, "Incorrect Login Credentials", Toast.LENGTH_SHORT).show();
             }
+            System.out.println("main activity done");
         }
     }
 }
