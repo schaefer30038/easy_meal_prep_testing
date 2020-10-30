@@ -21,7 +21,7 @@ public class MainMenu extends AppCompatActivity implements BottomNavigationView.
 //        quit = (Button) findViewById(R.id.Quit);
         nav = (BottomNavigationView) findViewById(R.id.bottomNav);
         nav.setOnNavigationItemSelectedListener(this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
 
 
 //        quit.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +51,7 @@ public class MainMenu extends AppCompatActivity implements BottomNavigationView.
         } else if (id == R.id.nav_setting) {
             fragment = new SettingFragment();
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
         return true;
     }
 
