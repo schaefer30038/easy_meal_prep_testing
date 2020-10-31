@@ -1,8 +1,11 @@
+package com.example.easymealprep;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Food {
 
@@ -180,7 +183,7 @@ public class Food {
 		}
 		return id;
 	}
-	
+
 	protected ResultSet searchOneFood(int foodID) {
 		String sql = "select * from Food where foodID = " + foodID + "; ";
 		ResultSet rs = null;
@@ -188,8 +191,31 @@ public class Food {
 			rs = stmt.executeQuery(sql);
 			return rs;
 		} catch (SQLException e) {
-			System.out.println("Error: searchOneFood " + e.getMessage());
+			System.out.println("Error: searchFood " + e.getMessage());
 		}
 		return rs;
+	}
+	protected ArrayList<Object[]> getFavoritesFoodName(ArrayList<Integer> integerArrayList) {
+		ArrayList<Object[]> arrayList = new ArrayList<>();
+		for (int i = 0; i < integerArrayList.size(); i++) {
+			ResultSet resultSet = searchOneFood(integerArrayList.get(i));
+			if (resultSet != null) {
+				try {
+					int foodID = resultSet.getInt("foodID");
+					String foodName = resultSet.getString("foodName");
+					String foodDescription = resultSet.getString("foodDescription");
+					byte [] foodPic = resultSet.getBytes("foodPic");
+					Object[] array = new Object[4];
+					array[0] = foodID;
+					array[1] = foodName;
+					array[2] = foodDescription;
+					array[3] = foodPic;
+					arrayList.add(array);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return arrayList;
 	}
 }
