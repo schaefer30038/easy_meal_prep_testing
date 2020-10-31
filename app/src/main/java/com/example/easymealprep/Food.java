@@ -188,7 +188,7 @@ public class Food {
 			rs = stmt.executeQuery(sql);
 			return rs;
 		} catch (SQLException e) {
-			System.out.println("Error: searchFood " + e.getMessage());
+			System.out.println("Error: searchOneFood " + e.getMessage());
 		}
 		return rs;
 	}
