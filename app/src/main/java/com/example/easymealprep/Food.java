@@ -1,5 +1,3 @@
-package com.example.easymealprep;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -181,5 +179,17 @@ public class Food {
 			System.out.println("Error: getFoodID " + e.getMessage());
 		}
 		return id;
+	}
+	
+	protected ResultSet searchOneFood(int foodID) {
+		String sql = "select * from Food where foodName foodID = " + foodID + "; ";
+		ResultSet rs = null;
+		try {
+			rs = stmt.executeQuery(sql);
+			return rs;
+		} catch (SQLException e) {
+			System.out.println("Error: searchFood " + e.getMessage());
+		}
+		return rs;
 	}
 }
