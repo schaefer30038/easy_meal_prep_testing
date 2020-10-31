@@ -182,7 +182,7 @@ public class Food {
 	}
 	
 	protected ResultSet searchOneFood(int foodID) {
-		String sql = "select * from Food where foodName foodID = " + foodID + "; ";
+		String sql = "select * from Food where foodID = " + foodID + "; ";
 		ResultSet rs = null;
 		try {
 			rs = stmt.executeQuery(sql);
