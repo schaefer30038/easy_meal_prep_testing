@@ -2,6 +2,7 @@ package com.example.easymealprep;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class ListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 // TODO Logic for delete
-
+                new DeleteFoodAsync().execute(entryData.get(position));
                 entryData.remove(entryData.get(position));
                 notifyDataSetChanged();
 
@@ -70,4 +71,22 @@ public class ListAdapter extends BaseAdapter {
     public long getItemId(int position) {
         // TODO Auto-generated method stub
         return position;
-    }}
+    }
+
+    public class DeleteFoodAsync extends AsyncTask<String,Void,Void> {
+        Food food;
+        @Override
+        protected Void doInBackground(String... strings) {
+            food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
+            String foodName = strings[0];
+            Statics.check = food.deleteFood(foodName);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    }
+}
+
