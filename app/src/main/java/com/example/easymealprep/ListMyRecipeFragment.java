@@ -36,16 +36,9 @@ public class ListMyRecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //View inputFragmentView = inflater.inflate(R.layout.fragment_list, container, false);
-        if(view==null)
-        {
-            view=inflater.inflate(R.layout.fragment_list, container,false);
-        }
-        else
-        {
-            ViewGroup parent = (ViewGroup) view.getParent();
-            parent.removeView(view);
-        }
+
+
+        view=inflater.inflate(R.layout.fragment_list, container,false);
         mListview = (ListView) view.findViewById(R.id.recipeTitles);
         mArrData = new ArrayList<String>();
         mAdapter = new ListAdapter(getActivity(),R.layout.customlistlayout, mArrData);
@@ -64,16 +57,16 @@ public class ListMyRecipeFragment extends Fragment {
         }
         // TODO get only my recipe
         @Override
-        protected void onPostExecute(Void aVoid) {ArrayList<String> list = new ArrayList<>();
+        protected void onPostExecute(Void aVoid) {
+            ArrayList<String> list = new ArrayList<>();
             if (resultSet != null) {
-                System.out.println("ASDasd");
                 try {
                     while (resultSet.next()) {
                         int foodID = resultSet.getInt("foodID");
                         String foodName = resultSet.getString("foodName");
                         String foodDescription = resultSet.getString("foodDescription");
                         list.add(foodName);
-                        byte [] foodPic = resultSet.getBytes("foodPic");
+                        byte[] foodPic = resultSet.getBytes("foodPic");
                         Object[] array = new Object[4];
                         array[0] = foodID;
                         array[1] = foodName;
@@ -89,6 +82,8 @@ public class ListMyRecipeFragment extends Fragment {
 
             mAdapter = new ListAdapter(getActivity(), R.layout.customlistlayout, list);
             mListview.setAdapter(mAdapter);
+
+
 
 
             mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -111,6 +106,8 @@ public class ListMyRecipeFragment extends Fragment {
                     transaction.commit();
                 }
             });
+
+
         }
     }
 }

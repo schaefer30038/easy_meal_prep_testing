@@ -83,6 +83,7 @@ public class ListRecipeFragment extends Fragment {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                     Statics.currFood[0] = arrayLists.get(position)[0];
                     Statics.currFood[1] = arrayLists.get(position)[1];
                     Statics.currFood[2] = arrayLists.get(position)[2];
