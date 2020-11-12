@@ -485,6 +485,47 @@ utf: begin
 end $$
 delimiter ;
 
+delimiter $$
+drop procedure if exists createIngredient;
+create procedure createIngredient (in newIngredient varchar(20), out status varchar(10))
+ci: begin
+	declare find varchar(20);
+    
+    set find = (
+		select *
+        from Ingredient ig
+        where ig.ingredientName = newIngredient);
+	if find is NOT NULL then
+		set status = "Fail";
+        leave ci;
+	end if;
+    
+    insert into Ingredient values (newIngredient);
+    set status = "Success";
+end $$
+delimiter ;
+
+delimiter $$
+drop procedure if exists createIngredientFood;
+create procedure createIngredientFood (in fid BIGINT, in newIngredient varchar(20))
+cif: begin
+	declare find BIGINT;
+    
+    set find = (
+		select foodID
+        from FoodIngredient
+        where foodID = fid
+			and ingredientName = newIngredient);
+	
+    if find is NOT NULL then
+		leave cif;
+	end if;
+    
+    insert into FoodIngredient values (fid, newIngredient);
+end $$
+delimiter ;
+
+insert into Ingredient values ("Test Ingredient");
 select * from Favorite;
 select * from Food;
 select * from Account;
@@ -492,6 +533,8 @@ select * from Recipe;
 select * from Tool;
 select * from FoodTool;
 select * from Favorite;
+select * from Ingredient;
+select * from FoodIngredient;
 delete from FoodTool where foodID = 1;
 delete from Tool where toolName = "Test1";
 
