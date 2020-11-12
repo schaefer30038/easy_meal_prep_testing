@@ -18,6 +18,7 @@ public class ListAdapter extends BaseAdapter {
     private int resource;
     private Activity activity;
     private ArrayList<String> entryData;
+    
 
     public ListAdapter(Context context, int resource, ArrayList arrData) {
         super();
@@ -41,11 +42,11 @@ public class ListAdapter extends BaseAdapter {
 
 
         // get the reference of textView and button
-        TextView txtSchoolTitle = (TextView) view.findViewById(R.id.recipeName);
+        TextView title = (TextView) view.findViewById(R.id.recipeName);
         final ImageButton deleteButton = (ImageButton) view.findViewById(R.id.deleteBtn);
-
+        final ImageButton editButton = (ImageButton)view.findViewById(R.id.editBtn); 
         // Set the title and button name
-        txtSchoolTitle.setText(entryData.get(position));
+        title.setText(entryData.get(position));
         //btnAction.setText("Action " + position);
 
         // Click listener of button
@@ -55,6 +56,15 @@ public class ListAdapter extends BaseAdapter {
                 // TODO Logic for delete
                 new DeleteFoodAsync().execute(entryData.get(position));
                 entryData.remove(entryData.get(position));
+                notifyDataSetChanged();
+
+            }
+        });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO Logic for Edit
+
                 notifyDataSetChanged();
 
             }

@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UpdateProfileFragment#newInstance} factory method to
+ * Use the {@link UpdateProfileFragment} factory method to
  * create an instance of this fragment.
  */
 public class UpdateProfileFragment extends Fragment {
