@@ -50,17 +50,59 @@ public class Tool {
 		return false;
 	}
 
-	protected ResultSet listTool() {
-		ResultSet rs = null;
-		return rs;
+	protected ArrayList<String> listTool() {
+		try {
+			ArrayList<String> tools = new ArrayList<String>();
+			String sql = "select * from Tool;";
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				tools.add(rs.getString("toolName"));
+			}
+			return tools;
+		} catch (SQLException e) {
+			System.out.println("Error: listTool " + e.getMessage());
+		}
+		return null;
 	}
 
-	protected ResultSet listToolFood(int foodID) {
-		ResultSet rs = null;
-		return rs;
+	protected ArrayList[] listToolFood(int foodID) {
+		try {
+			ArrayList[] result = new ArrayList[2];
+			result[1] = new ArrayList<String>();
+			result[0] = new ArrayList<String>();
+			
+			String sql = "select * from FoodTool where foodID = " + foodID + ";";
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				result[0].add(rs.getString("foodID"));
+				result[1].add(rs.getString("toolName"));
+			}
+			return result;
+		} catch (SQLException e) {
+			System.out.println("Error: listTool " + e.getMessage());
+		}
+		return null;
 	}
 
 	protected boolean updateToolFood(int foodID, ArrayList<String> tools) {
+		try {
+			String sql = "delete from FoodTool where foodID = " + foodID + ";";
+			stmt.executeUpdate(sql);
+			
+			for (int i = 0; i < tools.size(); i++) {
+				cstmt = conn.prepareCall("insert into FoodTool values (?, ?);");
+				cstmt.setString(1, tools.get(i));
+				cstmt.setInt(2, foodID);
+				
+				if (cstmt.executeUpdate() != 1) {
+					return false;
+				}
+				
+			}
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Error: updateToolFood " + e.getMessage());
+		}
 		return false;
 	}
 
