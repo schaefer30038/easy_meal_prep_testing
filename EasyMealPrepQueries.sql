@@ -466,26 +466,6 @@ end $$
 delimiter ;
 
 delimiter $$
-drop procedure if exists updateToolFood;
-create procedure updateToolFood(in foodID BIGINT, in toolName varchar(20))
-utf: begin
-	declare find BIGINT;
-    
-    set find = (
-		select ft.foodID
-        from FoodTool ft
-        where ft.foodID = foodID);
-	
-    if find is NULL then
-		leave utf;
-	end if;
-    
-    delete from FoodTool ft where ft.foodID = foodID
-    
-end $$
-delimiter ;
-
-delimiter $$
 drop procedure if exists createIngredient;
 create procedure createIngredient (in newIngredient varchar(20), out status varchar(10))
 ci: begin
@@ -537,7 +517,7 @@ select * from Ingredient;
 select * from FoodIngredient;
 delete from FoodTool where foodID = 1;
 delete from Tool where toolName = "Test1";
-
+delete from Tool;
 insert into Food values (4, "Admin", "new4", "new4", null);
 
 select * from Food where foodName like '%new%';
