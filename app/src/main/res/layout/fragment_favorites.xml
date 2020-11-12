@@ -9,14 +9,14 @@
 
 
     <TextView
-        android:id="titleList"
+        android:id="@+id/titleList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Favorites"
         android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="parent"
         android:theme="@style/TitleText"
-        android:gravity="center_horizontal" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         app:layout_constraintBottom_toBottomOf="parent"

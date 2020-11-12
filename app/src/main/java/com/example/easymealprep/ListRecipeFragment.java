@@ -36,14 +36,8 @@ public class ListRecipeFragment extends Fragment {
         // Inflate the layout for this fragment
        // System.out.println("home fragment");
        // quit_button = (Button) inputFragmentView.findViewById(R.id.Quit);
-        ArrayList<String> list = new ArrayList<>();
         listView = (ListView) inputFragmentView.findViewById(R.id.recipeTitles);
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, list);
-
-
-
-
-
+        new ListAllFoodAsync().execute();
         return inputFragmentView;
     }
     public class ListAllFoodAsync extends AsyncTask<Void,Void,Void> {
