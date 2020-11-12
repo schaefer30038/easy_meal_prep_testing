@@ -75,8 +75,8 @@ public class ListRecipeFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
-
-            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, list);
+            //used default android.R.layout.simple_list_item_1 before. Changed  this to custom XML for iteration2
+            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.listview_items, list);
 
             listView.setAdapter(arrayAdapter);
 
