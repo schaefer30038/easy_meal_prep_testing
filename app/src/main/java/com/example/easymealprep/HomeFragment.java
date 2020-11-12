@@ -58,6 +58,23 @@ public class HomeFragment extends Fragment {
 
             }
         });
+        myRecipes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment newFragment = new ListMyRecipeFragment();
+                // consider using Java coding conventions (upper first char class names!!!)
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.fragment_container, newFragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+
+            }
+        });
         return inputFragmentView;
     }
 }
