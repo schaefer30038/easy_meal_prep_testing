@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.core.app.ActivityCompat;
@@ -19,7 +20,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 
 /**
@@ -29,10 +33,11 @@ import java.io.IOException;
  */
 public class AddRecipeFragment extends Fragment {
     private static final int PICK_IMAGE = 100;
-    EditText enterFoodName, enterFoodDescription, enterFoodIngredient, enterFoodTools;
+    EditText enterFoodName, enterFoodDescription, enterSteps, enterFoodIngredient, enterFoodTools;
     Button button, createRecipe_button;
     ImageView imageView;
     Uri imageUri;
+    Bitmap bitmap;
 
     public AddRecipeFragment() {
         // Required empty public constructor
@@ -46,6 +51,7 @@ public class AddRecipeFragment extends Fragment {
 
         enterFoodName = (EditText) inputFragmentView.findViewById(R.id.enterFoodName);
         enterFoodDescription = (EditText) inputFragmentView.findViewById(R.id.enterFoodDescription);
+        enterSteps = (EditText) inputFragmentView.findViewById(R.id.enterSteps);
         enterFoodIngredient = (EditText) inputFragmentView.findViewById(R.id.enterFoodIngredient);
         enterFoodTools = (EditText) inputFragmentView.findViewById(R.id.enterFoodTools);
 
@@ -77,9 +83,14 @@ public class AddRecipeFragment extends Fragment {
                 System.out.println("Made it to AddRecipeFragment, onClick, createRecipe_button");
                 String name = enterFoodName.getText().toString();
                 String description = enterFoodDescription.getText().toString();
+                String instruction = enterSteps.getText().toString();
                 String ingredient = enterFoodIngredient.getText().toString();
                 String tool = enterFoodTools.getText().toString();
-                sendData(name, description, ingredient, tool, imageUri);
+                try {
+                    sendData(name, description, instruction, ingredient, tool, bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -87,9 +98,28 @@ public class AddRecipeFragment extends Fragment {
         return inputFragmentView;
     }
 
-    private void sendData(String name, String description, String ingredient, String tool, Uri imageUri) {
-
+    private void sendData(String name, String description, String instruction, String ingredient, String tool, Bitmap bitmap) throws IOException {
+        byte[] imageByte = null;
+        if(bitmap != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+            imageByte = stream.toByteArray();
+        }
+        new CreateRecipeAsync().execute(name, description, imageByte, instruction, ingredient, tool);
     }
+
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }
+
 
     private void startGallery() {
         System.out.println("Made it to AddRecipeFragment, startGallery");
@@ -109,6 +139,50 @@ public class AddRecipeFragment extends Fragment {
             System.out.println("Made it to AddRecipeFragment, onActivityResult, if statement");
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public class CreateRecipeAsync extends AsyncTask<Object,Void,Void> {
+        @Override
+        protected Void doInBackground(Object... objects) {
+            Food food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
+            String foodName = (String) objects[0];
+            String foodDescription = (String) objects[1];
+            byte [] picture = (byte[]) objects[2];
+            String instruction = (String) objects[3];
+
+
+            Statics.check = food.createFood(foodName, foodDescription, picture);
+            int foodID = food.getFoodID(foodName);
+            Recipe recipe = new Recipe(Statics.connection.getConnection(), Statics.currUserAccount);
+            String[] array = instruction.split("\n");
+            ArrayList<String> arrayList = new ArrayList<>();
+            for(String text:array) {
+                arrayList.add(text);
+            }
+            Statics.check = recipe.createRecipe(foodID, arrayList);
+            String ingredientsList = (String) objects[4];
+            array = ingredientsList.split("\n");
+            Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
+            for(String text:array) {
+                Statics.check = ingredient.createIngredientFood(foodID, text);
+            }
+            Tool tool = new Tool(Statics.connection.getConnection());
+            String toolsList = (String) objects[5];
+            array = toolsList.split("\n");
+            for(String text:array) {
+                Statics.check = ingredient.createIngredientFood(foodID, text);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.example.easymealprep;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -52,14 +54,8 @@ public class FoodFragment extends Fragment {
         if (foodPic == null)
             foodPicIV.setImageResource(R.drawable.default_food_pic);
         else {
-            String s = null;
-            try {
-                s = new String(foodPic, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            Uri uri = Uri.parse(s);
-            foodPicIV.setImageURI(uri);
+            Bitmap bmp = BitmapFactory.decodeByteArray(foodPic, 0, foodPic.length);
+            foodPicIV.setImageBitmap(bmp);
         }
         sendData(foodID);
         return inputFragmentView;
