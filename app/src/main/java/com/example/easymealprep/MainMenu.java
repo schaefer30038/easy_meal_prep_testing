@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+// MOST OF THIS FILE WAS CREATED IN ITERATION 1
 public class MainMenu extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     Button quit;
     private BottomNavigationView nav;
@@ -46,8 +46,8 @@ public class MainMenu extends AppCompatActivity implements BottomNavigationView.
             fragment = new HomeFragment();
         } else if (id == R.id.nav_search) {
             fragment = new SearchFragment();
-        } else if (id == R.id.nav_add_recipe) {
-            fragment = new AddRecipeFragment();
+        } else if (id == R.id.nav_add_recipe) { // THIS WHOLE LiNE WAS CREATED IN ITERATION 2
+            fragment = new AddRecipeFragment();// THIS WHOLE LiNE WAS CREATED IN ITERATION 2
         } else if (id == R.id.nav_favorites) {
             fragment = new FavoritesFragment();
         } else if (id == R.id.nav_setting) {

@@ -18,7 +18,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+// MOST OF FILE WAS CREATED IN ITERATION 1
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FoodFragment#} factory method to
@@ -79,7 +79,7 @@ public class FoodFragment extends Fragment {
             Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
             ingredientsList = ingredient.listIngredientFood(foodID);
             Tool tool = new Tool(Statics.connection.getConnection());
-            toolsList = tool.listToolFood(foodID);
+            toolsList = tool.listToolFood(foodID);//ADDED IN ITERATION 2
             System.out.println("recipe back");
             return null;
         }
@@ -105,14 +105,14 @@ public class FoodFragment extends Fragment {
                 System.out.println("resultset null");
             }
             String ingredientsText = "";
-            for (int i = 0; i < ingredientsList[1].size(); i++) {
+            for (int i = 0; i < ingredientsList[1].size(); i++) {//ADDED IN ITERATION 2
                 if (i < ingredientsList[1].size() - 1)
                     ingredientsText += ingredientsList[1].get(i) + ", ";
                 else
                     ingredientsText += ingredientsList[1].get(i);
             }
             String toolsText = "";
-            for (int i = 0; i < toolsList[1].size(); i++) {
+            for (int i = 0; i < toolsList[1].size(); i++) {//ADDED IN ITERATION 2
                 if (i < toolsList[1].size() - 1)
                     toolsText += toolsList[1].get(i) + ", ";
                 else

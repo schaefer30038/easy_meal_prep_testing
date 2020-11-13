@@ -11,10 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
+// THIS WHOLE FILE WAS CREATED IN ITERATION 1
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SettingFragment#newInstance} factory method to
+ * Use the {@link SettingFragment} factory method to
  * create an instance of this fragment.
  */
 public class SettingFragment extends Fragment {

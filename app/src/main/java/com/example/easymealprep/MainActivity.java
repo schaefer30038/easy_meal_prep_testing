@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+// THIS WHOLE FILE WAS CREATED IN ITERATION 1
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     TextView title, login;
     EditText username, password;

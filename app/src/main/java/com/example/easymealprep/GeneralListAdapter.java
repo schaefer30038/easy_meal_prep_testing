@@ -18,7 +18,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import androidx.cardview.widget.CardView;
-
+// THIS WHOLE FILE WAS CREATED IN ITERATION 2
 public class GeneralListAdapter extends BaseAdapter {
     private Context context;
     private int resource;

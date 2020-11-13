@@ -19,8 +19,8 @@ import android.widget.TextView;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-/**
+// THIS WHOLE FILE WAS CREATED IN ITERATION 1
+ /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SearchFragment#} factory method to
  * create an instance of this fragment.

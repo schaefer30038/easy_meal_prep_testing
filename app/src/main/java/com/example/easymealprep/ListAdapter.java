@@ -20,7 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import java.util.ArrayList;
 
 import static com.example.easymealprep.ListMyRecipeFragment.arrayLists;
-
+// THIS WHOLE FILE WAS CREATED IN ITERATION 2
 public class ListAdapter extends BaseAdapter {
     private Context context;
     private int resource;

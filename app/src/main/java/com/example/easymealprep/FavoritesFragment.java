@@ -16,10 +16,10 @@ import android.widget.ListView;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+//WHOLE FILE CREATED IN ITERATION1
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FavoritesFragment#newInstance} factory method to
+ * Use the {@link FavoritesFragment#} factory method to
  * create an instance of this fragment.
  */
 public class FavoritesFragment extends Fragment {
