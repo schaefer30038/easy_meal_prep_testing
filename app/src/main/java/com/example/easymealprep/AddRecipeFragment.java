@@ -1,6 +1,8 @@
 package com.example.easymealprep;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -23,7 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-// THIS WHOLE FILE WAS CREATED IN ITERATION 2
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AddRecipeFragment} factory method to
@@ -172,20 +175,20 @@ public class AddRecipeFragment extends Fragment {
             for(String text:array) {
                 arrayList.add(text);
             }
-            Statics.check = recipe.createRecipe(foodID, arrayList);
+            Statics.check = Statics.check && recipe.createRecipe(foodID, arrayList);
             String ingredientsList = (String) objects[4];
             array = ingredientsList.split("\n");
             Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
             for(String text:array) {
-                Statics.check = ingredient.createIngredient(text);
-                Statics.check = ingredient.createIngredientFood(foodID, text);
+                Statics.check = Statics.check && ingredient.createIngredient(text);
+                Statics.check = Statics.check && ingredient.createIngredientFood(foodID, text);
             }
             Tool tool = new Tool(Statics.connection.getConnection());
             String toolsList = (String) objects[5];
             array = toolsList.split("\n");
             for(String text:array) {
-                Statics.check = tool.createTool(text);
-                Statics.check = tool.createToolFood(foodID, text);
+                Statics.check = Statics.check && tool.createTool(text);
+                Statics.check = Statics.check && tool.createToolFood(foodID, text);
             }
             return null;
         }
@@ -193,6 +196,33 @@ public class AddRecipeFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            if (Statics.check) {
+                builder.setMessage("Recipe Created")
+                        .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int which) {
+                                Fragment newFragment = new AddRecipeFragment();
+                                // consider using Java coding conventions (upper first char class names!!!)
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                                // Replace whatever is in the fragment_container view with this fragment,
+                                // and add the transaction to the back stack
+                                transaction.replace(R.id.fragment_container, newFragment);
+                                transaction.addToBackStack(null);
+
+                                // Commit the transaction
+                                transaction.commit();
+                            }
+                        })
+                        .create()
+                        .show();
+            } else {
+                builder.setMessage("Recipe Create Failed")
+                        .setNegativeButton("Retry", null)
+                        .create()
+                        .show();
+            }
         }
     }
 }

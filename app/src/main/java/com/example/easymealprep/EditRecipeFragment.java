@@ -1,6 +1,8 @@
 package com.example.easymealprep;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -26,7 +29,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-//WHOLE FILE ADDED IN ITERATION 2
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AddRecipeFragment} factory method to
@@ -34,7 +37,7 @@ import java.util.ArrayList;
  */
 public class EditRecipeFragment extends Fragment {
     private static final int PICK_IMAGE = 100;
-    EditText enterFoodName, enterFoodDescription, enterSteps, enterFoodIngredient, enterFoodTools;
+    EditText updateFoodName, updateFoodDescription, updateSteps, updateFoodIngredient, updateFoodTools;
     Button button, updateRecipe_button;
     ImageView imageView;
     Uri imageUri;
@@ -50,25 +53,25 @@ public class EditRecipeFragment extends Fragment {
         View inputFragmentView = inflater.inflate(R.layout.fragment_edit_recipe, container, false);
         // Inflate the layout for this fragment
 
-        enterFoodName = (EditText) inputFragmentView.findViewById(R.id.enterFoodName);
-        enterFoodDescription = (EditText) inputFragmentView.findViewById(R.id.enterFoodDescription);
-        enterSteps = (EditText) inputFragmentView.findViewById(R.id.enterSteps);
-        enterFoodIngredient = (EditText) inputFragmentView.findViewById(R.id.enterFoodIngredient);
-        enterFoodTools = (EditText) inputFragmentView.findViewById(R.id.enterFoodTools);
+        updateFoodName = (EditText) inputFragmentView.findViewById(R.id.updateFoodName);
+        updateFoodDescription = (EditText) inputFragmentView.findViewById(R.id.updateFoodDescription);
+        updateSteps = (EditText) inputFragmentView.findViewById(R.id.updateSteps);
+        updateFoodIngredient = (EditText) inputFragmentView.findViewById(R.id.updateFoodIngredient);
+        updateFoodTools = (EditText) inputFragmentView.findViewById(R.id.updateFoodTools);
 
-        imageView = (ImageView) inputFragmentView.findViewById(R.id.imageView);
+        imageView = (ImageView) inputFragmentView.findViewById(R.id.updateRecipe_iv);
 
-        button = (Button) inputFragmentView.findViewById(R.id.button);
-        updateRecipe_button = (Button) inputFragmentView.findViewById(R.id.createRecipe_button);
+        button = (Button) inputFragmentView.findViewById(R.id.updateRecipePic_btn);
+        updateRecipe_button = (Button) inputFragmentView.findViewById(R.id.updateRecipe_btn);
         String foodName = (String) Statics.currFood[1];
         String foodDesc = (String) Statics.currFood[2];
         byte[] foodPic = (byte[]) Statics.currFood[3];
-        enterFoodName.setText(foodName);
-        enterFoodDescription.setText(foodDesc);
+        updateFoodName.setText(foodName);
+        updateFoodDescription.setText(foodDesc);
 
         if (foodPic != null) {
-            Bitmap bmp = BitmapFactory.decodeByteArray(foodPic, 0, foodPic.length);
-            imageView.setImageBitmap(bmp);
+            bitmap = BitmapFactory.decodeByteArray(foodPic, 0, foodPic.length);
+            imageView.setImageBitmap(bitmap);
         }
         new GetRecipeInfoAsync().execute();
         button.setOnClickListener(new View.OnClickListener() {
@@ -92,11 +95,11 @@ public class EditRecipeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 System.out.println("Made it to AddRecipeFragment, onClick, createRecipe_button");
-                String name = enterFoodName.getText().toString();
-                String description = enterFoodDescription.getText().toString();
-                String instruction = enterSteps.getText().toString();
-                String ingredient = enterFoodIngredient.getText().toString();
-                String tool = enterFoodTools.getText().toString();
+                String name = updateFoodName.getText().toString();
+                String description = updateFoodDescription.getText().toString();
+                String instruction = updateSteps.getText().toString();
+                String ingredient = updateFoodIngredient.getText().toString();
+                String tool = updateFoodTools.getText().toString();
                 try {
                     sendData(name, description, instruction, ingredient, tool, bitmap);
                 } catch (IOException e) {
@@ -123,6 +126,8 @@ public class EditRecipeFragment extends Fragment {
 
     public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         Bitmap result = image;
+        if (image == null)
+            System.out.println("null bitmap");
         int width = image.getWidth();
         int height = image.getHeight();
         if (maxSize < width || maxSize < height) {
@@ -162,8 +167,10 @@ public class EditRecipeFragment extends Fragment {
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
             try {
+                System.out.println("Made it to AddRecipeFragment, onActivityResult, try statement");
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
             } catch (IOException e) {
+
                 e.printStackTrace();
             }
         }
@@ -221,55 +228,104 @@ public class EditRecipeFragment extends Fragment {
             }
             System.out.println(instruction);
 
-            enterSteps.setText(instruction);
-            enterFoodIngredient.setText(ingredientsText);
-            enterFoodTools.setText(toolsText);
+            updateSteps.setText(instruction);
+            updateFoodIngredient.setText(ingredientsText);
+            updateFoodTools.setText(toolsText);
         }
     }
 
     public class UpdateRecipeAsync extends AsyncTask<Object,Void,Void> {
         @Override
         protected Void doInBackground(Object... objects) {
+            boolean bool = false;
             int foodID = (int) Statics.currFood[0];
             Food food = new Food(Statics.connection.getConnection(), Statics.currUserAccount);
             String foodName = (String) objects[0];
             String foodDescription = (String) objects[1];
             byte [] picture = (byte[]) objects[2];
             String instruction = (String) objects[3];
+            food.updateFood(foodID, null, null, null);
             Statics.check = food.updateFood(foodID, foodName, foodDescription, picture);
+            if (!Statics.check) {
+                System.out.println("food update failed");
+            }
             Recipe recipe = new Recipe(Statics.connection.getConnection(), Statics.currUserAccount);
             String[] array = instruction.split("\n");
             ArrayList<String> arrayList = new ArrayList<>();
             for(String text:array) {
+                System.out.println(text);
                 arrayList.add(text);
             }
-            Statics.check = recipe.updateRecipe(foodID, arrayList);
+            bool = recipe.updateRecipe(foodID, arrayList);
+            Statics.check = Statics.check && bool;
+            if (!bool) {
+                System.out.println("recipe update failed");
+            }
             String ingredientsList = (String) objects[4];
             array = ingredientsList.split("\n");
             Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
             arrayList = new ArrayList<>();
             for(String text:array) {
                 arrayList.add(text);
-                Statics.check = ingredient.createIngredient(text);
+                ingredient.createIngredient(text);
             }
-            Statics.check = ingredient.updateIngredient(foodID, arrayList);
-            ingredient.deleteIngredient();
+            bool = ingredient.updateIngredient(foodID, arrayList);
+            Statics.check = Statics.check && bool;
+            if (!bool) {
+                System.out.println("ingredient update failed");
+            }
+            if (ingredient.deleteIngredient()) {
+                System.out.println("ingredient delete failed");
+            }
             Tool tool = new Tool(Statics.connection.getConnection());
             String toolsList = (String) objects[5];
             array = toolsList.split("\n");
             arrayList = new ArrayList<>();
             for(String text:array) {
                 arrayList.add(text);
-                Statics.check = tool.createTool(text);
+                tool.createTool(text);
             }
-            Statics.check = tool.updateToolFood(foodID, arrayList);
-            tool.deleteTool();
+            bool = tool.updateToolFood(foodID, arrayList);
+            Statics.check = Statics.check && bool;
+            if (!bool) {
+                System.out.println("tool update failed");
+            }
+            if (tool.deleteTool()) {
+                System.out.println("tool delete failed");
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            if (Statics.check) {
+                builder.setMessage("Recipe Updated")
+                .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        Fragment newFragment = new ListMyRecipeFragment();
+                        // consider using Java coding conventions (upper first char class names!!!)
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                        // Replace whatever is in the fragment_container view with this fragment,
+                        // and add the transaction to the back stack
+                        transaction.replace(R.id.fragment_container, newFragment);
+                        transaction.addToBackStack(null);
+
+                        // Commit the transaction
+                        transaction.commit();
+                    }
+                })
+                .create()
+                .show();
+            } else {
+                builder.setMessage("Recipe Update Failed")
+                .setNegativeButton("Retry", null)
+                .create()
+                .show();
+            }
         }
     }
 }
