@@ -20,7 +20,10 @@ import java.util.ArrayList;
 
 
 public class ListRecipeFragment extends Fragment {
-    ListView listView;
+    private View view;
+    private ListView mListview;
+    private ArrayList<String> mArrData;
+    private GeneralListAdapter mAdapter;
     ArrayList <Object[]> arrayLists = new ArrayList <Object[]>();
     // TODO add titles for recipes to list
     // TODO connect to FoodFragment to view recipe
@@ -32,13 +35,13 @@ public class ListRecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View inputFragmentView = inflater.inflate(R.layout.fragment_list, container, false);
-        // Inflate the layout for this fragment
-       // System.out.println("home fragment");
-       // quit_button = (Button) inputFragmentView.findViewById(R.id.Quit);
-        listView = (ListView) inputFragmentView.findViewById(R.id.recipeTitles);
-        new ListAllFoodAsync().execute();
-        return inputFragmentView;
+
+
+        view=inflater.inflate(R.layout.fragment_list, container,false);
+        mListview = (ListView) view.findViewById(R.id.recipeTitles);
+        mArrData = new ArrayList<String>();
+        new ListRecipeFragment.ListAllFoodAsync().execute();
+        return view;
     }
     public class ListAllFoodAsync extends AsyncTask<Void,Void,Void> {
         Food food;
@@ -52,7 +55,6 @@ public class ListRecipeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
             ArrayList<String> list = new ArrayList<>();
             if (resultSet != null) {
                 System.out.println("ASDasd");
@@ -76,14 +78,12 @@ public class ListRecipeFragment extends Fragment {
                 }
             }
             //used default android.R.layout.simple_list_item_1 before. Changed  this to custom XML for iteration2
-            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.listview_items, list);
+            mAdapter = new GeneralListAdapter(getActivity(), R.layout.listview_items, list);
+            mListview.setAdapter(mAdapter);
 
-            listView.setAdapter(arrayAdapter);
-
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                     Statics.currFood[0] = arrayLists.get(position)[0];
                     Statics.currFood[1] = arrayLists.get(position)[1];
                     Statics.currFood[2] = arrayLists.get(position)[2];

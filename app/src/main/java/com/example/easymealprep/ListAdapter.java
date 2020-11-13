@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -44,7 +45,8 @@ public class ListAdapter extends BaseAdapter {
         // get the reference of textView and button
         TextView title = (TextView) view.findViewById(R.id.recipeName);
         final ImageButton deleteButton = (ImageButton) view.findViewById(R.id.deleteBtn);
-        final ImageButton editButton = (ImageButton)view.findViewById(R.id.editBtn); 
+        final ImageButton editButton = (ImageButton)view.findViewById(R.id.editBtn);
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
         // Set the title and button name
         title.setText(entryData.get(position));
         //btnAction.setText("Action " + position);
