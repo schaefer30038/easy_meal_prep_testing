@@ -2,6 +2,8 @@ package com.example.easymealprep;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import java.util.ArrayList;
+
+import static com.example.easymealprep.ListMyRecipeFragment.arrayLists;
 
 public class ListAdapter extends BaseAdapter {
     private Context context;
@@ -47,6 +54,13 @@ public class ListAdapter extends BaseAdapter {
         final ImageButton deleteButton = (ImageButton) view.findViewById(R.id.deleteBtn);
         final ImageButton editButton = (ImageButton)view.findViewById(R.id.editBtn);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+
+        byte[] foodPic = (byte[]) arrayLists.get(position)[3];
+        if (foodPic != null) {
+            Bitmap bmp = BitmapFactory.decodeByteArray(foodPic, 0, foodPic.length);
+            imageView.setImageBitmap(bmp);
+        }
+
         // Set the title and button name
         title.setText(entryData.get(position));
         //btnAction.setText("Action " + position);
@@ -58,6 +72,7 @@ public class ListAdapter extends BaseAdapter {
                 // TODO Logic for delete
                 new DeleteFoodAsync().execute(entryData.get(position));
                 entryData.remove(entryData.get(position));
+                arrayLists.remove(position);
                 notifyDataSetChanged();
 
             }
@@ -66,7 +81,21 @@ public class ListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 // TODO Logic for Edit
+                Statics.currFood[0] = arrayLists.get(position)[0];
+                Statics.currFood[1] = arrayLists.get(position)[1];
+                Statics.currFood[2] = arrayLists.get(position)[2];
+                Statics.currFood[3] = arrayLists.get(position)[3];
+                Fragment newFragment = new EditRecipeFragment();
+                // consider using Java coding conventions (upper first char class names!!!)
+                FragmentTransaction transaction = ListMyRecipeFragment.fragmanager.beginTransaction();
 
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.fragment_container, newFragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
                 notifyDataSetChanged();
 
             }

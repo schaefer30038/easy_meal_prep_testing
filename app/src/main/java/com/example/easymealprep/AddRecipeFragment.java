@@ -9,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -22,7 +21,6 @@ import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 
@@ -102,22 +100,33 @@ public class AddRecipeFragment extends Fragment {
         byte[] imageByte = null;
         if(bitmap != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+            bitmap = getResizedBitmap(bitmap, 1000);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream);
+
             imageByte = stream.toByteArray();
         }
         new CreateRecipeAsync().execute(name, description, imageByte, instruction, ingredient, tool);
     }
 
-    public byte[] getBytes(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-
-        int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        Bitmap result = image;
+        int width = image.getWidth();
+        int height = image.getHeight();
+        if (maxSize < width || maxSize < height) {
+            System.out.println("resize bitmap");
+            float bitmapRatio = (float) width / (float) height;
+            if (bitmapRatio > 1) {
+                width = maxSize;
+                height = (int) (width / bitmapRatio);
+            } else {
+                height = maxSize;
+                width = (int) (height * bitmapRatio);
+            }
+            result = Bitmap.createScaledBitmap(image, width, height, true);
         }
-        return byteBuffer.toByteArray();
+        System.out.println("no resize bitmap");
+
+        return result;
     }
 
 
@@ -155,7 +164,6 @@ public class AddRecipeFragment extends Fragment {
             byte [] picture = (byte[]) objects[2];
             String instruction = (String) objects[3];
 
-
             Statics.check = food.createFood(foodName, foodDescription, picture);
             int foodID = food.getFoodID(foodName);
             Recipe recipe = new Recipe(Statics.connection.getConnection(), Statics.currUserAccount);
@@ -169,13 +177,15 @@ public class AddRecipeFragment extends Fragment {
             array = ingredientsList.split("\n");
             Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
             for(String text:array) {
+                Statics.check = ingredient.createIngredient(text);
                 Statics.check = ingredient.createIngredientFood(foodID, text);
             }
             Tool tool = new Tool(Statics.connection.getConnection());
             String toolsList = (String) objects[5];
             array = toolsList.split("\n");
             for(String text:array) {
-                Statics.check = ingredient.createIngredientFood(foodID, text);
+                Statics.check = tool.createTool(text);
+                Statics.check = tool.createToolFood(foodID, text);
             }
             return null;
         }

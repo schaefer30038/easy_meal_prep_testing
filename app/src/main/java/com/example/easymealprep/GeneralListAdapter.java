@@ -2,6 +2,8 @@ package com.example.easymealprep;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ public class GeneralListAdapter extends BaseAdapter {
     private int resource;
     private Activity activity;
     private ArrayList<String> entryData;
+    static String listName;
 
 
     public GeneralListAdapter(Context context, int resource, ArrayList arrData) {
@@ -49,6 +52,21 @@ public class GeneralListAdapter extends BaseAdapter {
         TextView title = (TextView) view.findViewById(R.id.recipeName);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
 
+        if (listName.equals("Search List")) {
+            byte[] foodPic = (byte[]) SearchFragment.arrayLists.get(position)[3];
+            if (foodPic != null) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(foodPic, 0, foodPic.length);
+                imageView.setImageBitmap(bmp);
+            }
+        }
+
+        if (listName.equals("All List")) {
+            byte[] foodPic = (byte[]) ListRecipeFragment.arrayLists.get(position)[3];
+            if (foodPic != null) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(foodPic, 0, foodPic.length);
+                imageView.setImageBitmap(bmp);
+            }
+        }
         // Set the title and button name
         title.setText(entryData.get(position));
         //btnAction.setText("Action " + position);

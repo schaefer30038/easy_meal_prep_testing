@@ -44,6 +44,22 @@
                 android:layout_marginBottom="10dp"
                 tools:src="@tools:sample/avatars" />
 
+            <ToggleButton
+                android:id="@+id/fav_toggle"
+                style="@style/toggleButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_toggle_bg"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:theme="@style/TitleText"
+                android:text="Description:" />
+
             <TextView
                 android:id="@+id/food_desc_tv"
                 android:layout_width="match_parent"
@@ -53,11 +69,40 @@
                 android:theme="@style/BodyText"/>
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:theme="@style/TitleText"
+                android:text="Ingredients:" />
+
+            <TextView
                 android:id="@+id/ingredients_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
+                android:theme="@style/BodyText" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:theme="@style/TitleText"
+                android:text="Tools Used:" />
+
+            <TextView
+                android:id="@+id/tools_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textSize="25sp"
                 android:theme="@style/BodyText"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Directions:"
+                android:textSize="24sp"
+                android:theme="@style/TitleText" />
 
             <TextView
                 android:id="@+id/instructions_tv"

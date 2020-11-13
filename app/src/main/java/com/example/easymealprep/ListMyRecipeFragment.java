@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.ViewGroup;
@@ -25,7 +26,8 @@ public class ListMyRecipeFragment extends Fragment {
     private ListView mListview;
     private ArrayList<String> mArrData;
     private ListAdapter mAdapter;
-    ArrayList <Object[]> arrayLists = new ArrayList <Object[]>();
+    static ArrayList <Object[]> arrayLists;
+    static FragmentManager fragmanager;
     // TODO add titles for recipes to list
     // TODO connect to FoodFragment to view recipe
 
@@ -37,7 +39,7 @@ public class ListMyRecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
+        arrayLists = new ArrayList <Object[]>();
         view=inflater.inflate(R.layout.fragment_list, container,false);
         mListview = (ListView) view.findViewById(R.id.recipeTitles);
         mArrData = new ArrayList<String>();
@@ -82,7 +84,7 @@ public class ListMyRecipeFragment extends Fragment {
 
             mAdapter = new ListAdapter(getActivity(), R.layout.customlistlayout, list);
             mListview.setAdapter(mAdapter);
-
+            fragmanager = getFragmentManager();
 
 
 

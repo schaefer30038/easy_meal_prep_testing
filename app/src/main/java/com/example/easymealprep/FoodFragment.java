@@ -17,6 +17,7 @@ import android.widget.TextView;
 import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,9 +26,8 @@ import java.sql.SQLException;
  */
 public class FoodFragment extends Fragment {
 
-    TextView foodNameTV, foodDescTV, ingredientsTV, instructionsTV;
+    TextView foodNameTV, foodDescTV, ingredientsTV, toolsTV, instructionsTV;
     ImageView foodPicIV;
-    String instruction = "";
 
     public FoodFragment() {
         // Required empty public constructor
@@ -43,6 +43,7 @@ public class FoodFragment extends Fragment {
         foodPicIV = (ImageView) inputFragmentView.findViewById(R.id.food_pic_iv);
         // TODO ingredient list when implements
         ingredientsTV = (TextView) inputFragmentView.findViewById(R.id.ingredients_tv);
+        toolsTV = (TextView) inputFragmentView.findViewById(R.id.tools_tv);
         instructionsTV = (TextView) inputFragmentView.findViewById(R.id.instructions_tv);
         int foodID = (int) Statics.currFood[0];
         String foodName = (String) Statics.currFood[1];
@@ -62,18 +63,23 @@ public class FoodFragment extends Fragment {
     }
 
     private void sendData(int foodID) {
-        new SearchOneRecipeAsync().execute(foodID);
+        new GetRecipeInfoAsync().execute(foodID);
     }
 
-    public class SearchOneRecipeAsync extends AsyncTask<Integer,Void,Void> {
-        Recipe recipe;
-        ResultSet resultSet;
+    public class GetRecipeInfoAsync extends AsyncTask<Integer,Void,Void> {
+        ResultSet recipeResultSet;
+        ArrayList [] ingredientsList;
+        ArrayList [] toolsList;
         @Override
         protected Void doInBackground(Integer... integers) {
-            recipe = new Recipe(Statics.connection.getConnection(), Statics.currUserAccount);
+            Recipe recipe = new Recipe(Statics.connection.getConnection(), Statics.currUserAccount);
             int foodID = integers[0];
             System.out.println(foodID);
-            resultSet = recipe.searchOneRecipe(foodID);
+            recipeResultSet = recipe.searchOneRecipe(foodID);
+            Ingredient ingredient = new Ingredient(Statics.connection.getConnection());
+            ingredientsList = ingredient.listIngredientFood(foodID);
+            Tool tool = new Tool(Statics.connection.getConnection());
+            toolsList = tool.listToolFood(foodID);
             System.out.println("recipe back");
             return null;
         }
@@ -81,12 +87,13 @@ public class FoodFragment extends Fragment {
         @Override
         protected void onPostExecute(Void avoid) {
             super.onPostExecute(avoid);
-            if (resultSet != null) {
+            String instruction = "";
+            if (recipeResultSet != null) {
                 System.out.println("recipe post");
                 try {
-                    while (resultSet.next()) {
-                        int step = resultSet.getInt("step");
-                        String inst = resultSet.getString("instruction");
+                    while (recipeResultSet.next()) {
+                        int step = recipeResultSet.getInt("step");
+                        String inst = recipeResultSet.getString("instruction");
                         instruction = instruction + step + ". " + inst + "\n";
                     }
                 } catch (SQLException e) {
@@ -97,9 +104,25 @@ public class FoodFragment extends Fragment {
             else {
                 System.out.println("resultset null");
             }
+            String ingredientsText = "";
+            for (int i = 0; i < ingredientsList[1].size(); i++) {
+                if (i < ingredientsList[1].size() - 1)
+                    ingredientsText += ingredientsList[1].get(i) + ", ";
+                else
+                    ingredientsText += ingredientsList[1].get(i);
+            }
+            String toolsText = "";
+            for (int i = 0; i < toolsList[1].size(); i++) {
+                if (i < toolsList[1].size() - 1)
+                    toolsText += toolsList[1].get(i) + ", ";
+                else
+                    toolsText += toolsList[1].get(i);
+            }
             System.out.println(instruction);
 
             instructionsTV.setText(instruction);
+            ingredientsTV.setText(ingredientsText);
+            toolsTV.setText(toolsText);
         }
     }
 }

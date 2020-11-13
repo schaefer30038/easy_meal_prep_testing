@@ -24,7 +24,7 @@ public class ListRecipeFragment extends Fragment {
     private ListView mListview;
     private ArrayList<String> mArrData;
     private GeneralListAdapter mAdapter;
-    ArrayList <Object[]> arrayLists = new ArrayList <Object[]>();
+    static ArrayList <Object[]> arrayLists;
     // TODO add titles for recipes to list
     // TODO connect to FoodFragment to view recipe
 
@@ -36,7 +36,7 @@ public class ListRecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
+        arrayLists = new ArrayList <Object[]>();
         view=inflater.inflate(R.layout.fragment_list, container,false);
         mListview = (ListView) view.findViewById(R.id.recipeTitles);
         mArrData = new ArrayList<String>();
@@ -79,6 +79,7 @@ public class ListRecipeFragment extends Fragment {
             }
             //used default android.R.layout.simple_list_item_1 before. Changed  this to custom XML for iteration2
             mAdapter = new GeneralListAdapter(getActivity(), R.layout.listview_items, list);
+            GeneralListAdapter.listName = "All List";
             mListview.setAdapter(mAdapter);
 
             mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
