@@ -2,7 +2,7 @@ package com.example.easymealprep;
 
 import android.os.AsyncTask;
 import java.sql.ResultSet;
-
+//
 public class AccountAsync {
     Account account;
 
