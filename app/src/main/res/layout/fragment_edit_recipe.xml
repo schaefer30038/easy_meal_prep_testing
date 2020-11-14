@@ -26,8 +26,8 @@
         android:id="@+id/updateRecipePic_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Select the Recipe Image"
+        android:text="Select Recipe Image"
+        android:theme="@style/NormalButton"
         app:layout_constraintBottom_toTopOf="@+id/updateRecipe_sv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,8 +35,8 @@
 
     <ImageView
         android:id="@+id/updateRecipe_iv"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/default_food_pic"
         app:layout_constraintBottom_toTopOf="@+id/updateRecipePic_btn"
@@ -46,13 +46,14 @@
 
     <Button
         android:id="@+id/updateRecipe_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="24dp"
         android:text="Update Recipe"
+        android:theme="@style/NormalButton"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/updateRecipe_sv"
+        app:layout_constraintStart_toStartOf="@id/updateRecipe_sv"
         app:layout_constraintTop_toBottomOf="@+id/updateRecipe_sv" />
 
     <ScrollView
@@ -63,7 +64,9 @@
         app:layout_constraintBottom_toTopOf="@+id/updateRecipe_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateRecipePic_btn">
+        app:layout_constraintTop_toBottomOf="@+id/updateRecipePic_btn"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginVertical="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,9 +76,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="0dp"
                 android:text="Food Name:"
-                android:textSize="15sp"
-                android:theme="@style/TitleText" />
+                android:theme="@style/TitleDesc" />
 
             <EditText
                 android:id="@+id/updateFoodName"
@@ -85,75 +88,71 @@
                 android:hint="Enter Food Name"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
-                android:theme="@style/FillInfo" />
+                android:theme="@style/FillDesc" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Description:"
-                android:textSize="15sp"
-                android:theme="@style/TitleText" />
+                android:theme="@style/TitleDesc" />
 
             <EditText
                 android:id="@+id/updateFoodDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:hint="Enter Food Description"
+                android:hint="Ex: Popular pasta recipe in my dorm"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
-                android:theme="@style/FillInfo" />
+                android:theme="@style/FillDesc" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ingredients:"
-                android:textSize="15sp"
-                android:theme="@style/TitleText" />
+                android:theme="@style/TitleDesc" />
 
             <EditText
                 android:id="@+id/updateFoodIngredient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:hint="Enter Ingredients"
+                android:hint="Ex: Tomato sauce, pasta"
                 android:inputType="textMultiLine"
                 android:textAlignment="center"
-                android:theme="@style/FillInfo" />
+                android:theme="@style/FillDesc" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tools Used:"
-                android:textSize="15sp"
-                android:theme="@style/TitleText" />
+                android:theme="@style/TitleDesc" />
 
             <EditText
                 android:id="@+id/updateFoodTools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:hint="Enter Tools Necessary"
+                android:hint="Ex: Saucepan, Microwave, Measuring Cup"
                 android:inputType="textMultiLine"
                 android:textAlignment="center"
-                android:theme="@style/FillInfo" />
+                android:theme="@style/FillDesc" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Directions:"
-                android:textSize="15sp"
-                android:theme="@style/TitleText" />
+                android:theme="@style/TitleDesc" />
 
             <EditText
                 android:id="@+id/updateSteps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:hint="Enter Directions"
+                android:hint="1: step one. 2: step two"
                 android:inputType="textMultiLine"
                 android:textAlignment="center"
-                android:theme="@style/FillInfo" />
+                android:theme="@style/FillDesc" />
         </LinearLayout>
     </ScrollView>
 

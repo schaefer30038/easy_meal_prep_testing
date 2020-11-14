@@ -40,8 +40,9 @@
             <ImageView
                 android:id="@+id/food_pic_iv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 tools:src="@tools:sample/avatars" />
 
             <ToggleButton
@@ -56,37 +57,32 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:theme="@style/TitleText"
-                android:text="Description:" />
+                android:text="Description:"
+                android:theme="@style/TitleDesc" />
 
             <TextView
                 android:id="@+id/food_desc_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:textSize="25sp"
                 android:theme="@style/BodyText"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:theme="@style/TitleText"
+                android:theme="@style/TitleDesc"
                 android:text="Ingredients:" />
 
             <TextView
                 android:id="@+id/ingredients_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
                 android:theme="@style/BodyText" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:theme="@style/TitleText"
+                android:theme="@style/TitleDesc"
                 android:text="Tools Used:" />
 
             <TextView
@@ -94,22 +90,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:textSize="25sp"
                 android:theme="@style/BodyText"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Directions:"
-                android:textSize="24sp"
-                android:theme="@style/TitleText" />
+                android:theme="@style/TitleDesc" />
 
             <TextView
                 android:id="@+id/instructions_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:textSize="25sp"
                 android:theme="@style/BodyText"/>
         </LinearLayout>
     </ScrollView>
