@@ -50,4 +50,16 @@
         <item name="android:textOff"></item>
     </style>
 
+    <style name="TitleDesc" parent="Theme.AppCompat">
+        <item name='android:textColor'>@color/lightCream</item>
+        <item name='fontFamily'>sans-serif-light</item>
+        <item name='android:textSize'>20sp</item>
+        <item name='android:paddingTop'>30sp</item>
+    </style>
+
+    <style name="FillDesc" parent="Theme.AppCompat">
+        <item name='android:backgroundTint'>@color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
