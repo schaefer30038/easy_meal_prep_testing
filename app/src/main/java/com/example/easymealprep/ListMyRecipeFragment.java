@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,6 +27,7 @@ public class ListMyRecipeFragment extends Fragment {
     private ListView mListview;
     private ArrayList<String> mArrData;
     private ListAdapter mAdapter;
+    private ProgressBar pbar;
     static ArrayList <Object[]> arrayLists;
     static FragmentManager fragmanager;
     // TODO add titles for recipes to list
@@ -46,8 +48,11 @@ public class ListMyRecipeFragment extends Fragment {
         mAdapter = new ListAdapter(getActivity(),R.layout.customlistlayout, mArrData);
         mListview.setAdapter(mAdapter);
         new ListUserFoodAsync().execute();
+
+
         return view;
     }
+
     public class ListUserFoodAsync extends AsyncTask<Void,Void,Void> {
         Food food;
         ResultSet resultSet;
@@ -85,7 +90,7 @@ public class ListMyRecipeFragment extends Fragment {
             mAdapter = new ListAdapter(getActivity(), R.layout.customlistlayout, list);
             mListview.setAdapter(mAdapter);
             fragmanager = getFragmentManager();
-
+        //    pbar.setVisibility(View.GONE);
 
 
             mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -26,6 +26,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -136,18 +138,18 @@ public class AddRecipeFragment extends Fragment {
     private void startGallery() {
         System.out.println("Made it to AddRecipeFragment, startGallery");
 
-        Intent cameraIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        cameraIntent.setType("image/*");
-        if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(cameraIntent, 1000);
-        }
+            Intent cameraIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        //    cameraIntent.setType("image/*");
+         //   if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivityForResult(cameraIntent, PICK_IMAGE);
+          //  }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("Made it to AddRecipeFragment, onActivityResult");
-        if (resultCode == -1 && requestCode == 1000){
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
             System.out.println("Made it to AddRecipeFragment, onActivityResult, if statement");
             imageUri = data.getData();
             imageView.setImageURI(imageUri);

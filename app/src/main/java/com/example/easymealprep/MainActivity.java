@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -49,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         newAccount.setOnClickListener(this);
         loginB.setOnClickListener(this);
 
-        //prog = (ProgressBar)findViewById(R.id.progressBar) ;
-        //prog.setVisibility(View.GONE);
+        prog = (ProgressBar)findViewById(R.id.progressBar) ;
+        prog.setVisibility(View.GONE);
     }
 
     @Override
@@ -79,30 +80,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.loginB_Button:
                 System.out.println("Made it in switch statement loginB");
-//                prog.setVisibility(View.VISIBLE);
+                prog.setVisibility(View.VISIBLE);
                 sendData();
                 break;
         }
     }
 
     private void sendData() {
-        hideKeyboard(MainActivity.this);
         String currUser = username.getText().toString();
         String pass = password.getText().toString();
         System.out.println("Testing BEFRORE LoginAccountAsync");
         new LoginAccountAsync().execute(currUser,pass);
         System.out.println("Testing AFTER LoginAccountAsync");
     }
-    public static void hideKeyboard(Activity activity) {
-//        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-//        //Find the currently focused view, so we can grab the correct window token from it.
-//        View view = activity.getCurrentFocus();
-//        //If no view currently has focus, create a new one, just so we can grab a window token from it
-//        if (view == null) {
-//            view = new View(activity);
-//        }
-//        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
+
     public class LoginAccountAsync extends AsyncTask<String,Void,Void> {
         Account account;
         @Override
@@ -133,10 +124,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else {
                 System.out.println("loginCheck didnt work");
 
-//            prog.setVisibility(View.GONE);
+
                 // Show error
                 Toast.makeText(MainActivity.this, "Incorrect Login Credentials", Toast.LENGTH_SHORT).show();
             }
+            prog.setVisibility(View.GONE);
             System.out.println("main activity done");
         }
     }

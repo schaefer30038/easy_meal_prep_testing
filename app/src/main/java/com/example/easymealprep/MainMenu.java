@@ -9,12 +9,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 // MOST OF THIS FILE WAS CREATED IN ITERATION 1
 public class MainMenu extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     Button quit;
     private BottomNavigationView nav;
+    private ProgressBar prog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +26,6 @@ public class MainMenu extends AppCompatActivity implements BottomNavigationView.
         nav.setOnNavigationItemSelectedListener(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-
 
 //        quit.setOnClickListener(new View.OnClickListener() {
 //            @Override
