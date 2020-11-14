@@ -29,6 +29,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -152,17 +154,17 @@ public class EditRecipeFragment extends Fragment {
         System.out.println("Made it to AddRecipeFragment, startGallery");
 
         Intent cameraIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        cameraIntent.setType("image/*");
-        if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(cameraIntent, 1000);
-        }
+       // cameraIntent.setType("image/*");
+       // if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(cameraIntent, PICK_IMAGE);
+        //}
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("Made it to AddRecipeFragment, onActivityResult");
-        if (resultCode == -1 && requestCode == 1000){
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
             System.out.println("Made it to AddRecipeFragment, onActivityResult, if statement");
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
