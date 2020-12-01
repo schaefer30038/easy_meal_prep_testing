@@ -13,9 +13,14 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 // THIS WHOLE FILE WAS CREATED IN ITERATION 1
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    TextView title, login;
+    TextView title, login, forgot_password;
     EditText username, password;
     Button newAccount, loginB;
 
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         title = (TextView) findViewById(R.id.title_TextView);
         // loginScreenLabel = (TextView) findViewById(R.id.loginScreenLabel_TextView);
         login = (TextView) findViewById(R.id.login_TextView);
+        forgot_password = (TextView) findViewById(R.id.forgot_password);
 
         username = (EditText) findViewById(R.id.username_EditText);
         password = (EditText) findViewById(R.id.password_EditText);
@@ -52,6 +58,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         prog = (ProgressBar)findViewById(R.id.progressBar) ;
         prog.setVisibility(View.GONE);
+
+        //TODO forgot password
+        forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+
+            }
+        });
     }
 
     @Override
@@ -105,6 +120,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String password = strings[1];
             account = new Account(Statics.connection.getConnection());
             Statics.check = account.loginAccount(accountName,password);
+            ResultSet resultSet = account.getFavorite();
+            Statics.currFavList = new ArrayList<>();
+            if (resultSet != null) {
+                System.out.println("ASDasd");
+                try {
+                    System.out.println("try favlist");
+                    while (resultSet.next()) {
+                        System.out.println("while favlist");
+                        int foodID = resultSet.getInt("foodID");
+                        Statics.currFavList.add(foodID);
+                        System.out.println(foodID);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             System.out.println(Statics.check + "do in bac");
             return null;
         }
